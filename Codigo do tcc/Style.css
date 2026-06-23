@@ -1,6 +1,4 @@
-/* google fonts*/
-
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+@import url('https://googleapis.com');
 * {
     margin: 0;
     padding: 0;
@@ -17,7 +15,7 @@
     --side-nav: #696f75;
     --text-color: #fff;
     --search-bar: #f2f2f2;
-    --search-text: #012b11;
+    --search-text: #054905;
     --font-family: #000;
 }
 
@@ -107,26 +105,26 @@ nav .nav-bar .logo a {
     margin: 0 5px;
 }
 
- .dark-light i,
- .searchToggle i {
+.dark-light i,
+.searchToggle i {
     position: absolute;
     color: var(--text-color);
     font-size: 22px;
     cursor: pointer;
     transition: all 0.2s ease;
- }
+}
 
 .dark-light i.sun {
     opacity: 0;
     pointer-events: none;
 }
 
-.dark-light .active i.sun {
+.dark-light.active i.sun {
     opacity: 1;
     pointer-events: auto;
 }
 
-.dark-light .active i.moon {
+.dark-light.active i.moon {
     opacity: 0;
     pointer-events: none;
 }
@@ -136,7 +134,7 @@ nav .nav-bar .logo a {
     pointer-events: none;
 }
 
-.searchToggle i.cancel {
+.searchToggle.active i.cancel {
     opacity: 1;
     pointer-events: auto;
 }
@@ -144,4 +142,51 @@ nav .nav-bar .logo a {
 .searchToggle.active i.search {
     opacity: 0;
     pointer-events: none;
+}
+
+.searchBox {
+    position: relative;
+}
+
+.searchBox .search-field {
+    position: absolute;
+    bottom: -85px;
+    right: 5px;
+    height: 50px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    background-color: var(--nav-color);
+    padding: 3px;
+    border-radius: 6px;
+}
+
+.search-field::before {
+    content: '';
+    position: absolute;
+    right: 14px;
+    top: -4px;
+    height: 12px;
+    width: 12px;
+    background-color: var(--nav-color);
+    transform: rotate(-45deg);
+    z-index: -1;
+}
+
+.search-field input {
+    height: 100%;
+    width: 100%;
+    padding: 0 45px 0 15px;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    color: var(--search-text);
+}
+
+.search-field i {
+    position: absolute;
+    color: var(--nav-color);
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
 }

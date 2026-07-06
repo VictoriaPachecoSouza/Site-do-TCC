@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Style.css">
+    <title>Solo em Equilíbrio</title>
+    <style>
+        /* ==================== ESTILOS DO CHAT / ROBÔ FLUTUANTE ==================== */
+        
+        /* BOTÃO FLUTUANTE DO CHAT (Círculo verde idêntico à imagem) */
+        .btn-abrir-chat-principal {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #5cb82a; /* Verde vivo da imagem */
+            border: none;
+            width: 70px;  
+            height: 70px; 
+            border-radius: 50%; /* Círculo perfeito */
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s, background-color 0.2s;
+            padding: 0;
+        }
+
+        .btn-abrir-chat-principal:hover {
+            background-color: #4da31f;
+            transform: scale(1.08); /* Zoom ao passar o mouse */
+        }
+
+        /* Ajuste de tamanho do vetor do robozinho */
+        .btn-abrir-chat-principal svg {
+            width: 58px;
+            height: 58px;
+        }
+
+        /* CONTAINER FLUTUANTE DO IFRAME (JANELA DO CHAT) */
+        .janela-chat-iframe {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            z-index: 10000;
+            background: transparent !important; 
+        }
+
+        .janela-chat-iframe iframe {
+            width: 400px;  
+            height: 500px; 
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            background-color: transparent !important; 
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-bar">
+            <!-- Ícone Menu Hambúrguer (SVG Nativo) -->
+            <svg class="sidebarOpen" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+            
+            <span class="logo"><a>Solo em Equilíbrio</a></span>
+            
+            <div class="menu">
+                <div class="logo-toggle">
+                    <span class="logo"><a>Solo em Equilíbrio</a></span>
+                    <!-- Ícone Fechar X do Menu (SVG Nativo) -->
+                    <svg class="sidebarClose" viewBox="0 0 24 24"><path d="m16.192 6.344-4.192 4.192-4.192-4.192-1.414 1.414 4.192 4.192-4.192 4.192 1.414 1.414 4.192-4.192 4.192 4.192 1.414-1.414-4.192-4.192 4.192-4.192z"/></svg>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="portifolio.html">Portifólio</a></li>
+                    <li><a href="#">Equipe</a></li>
+                    <li><a href="#">Informações</a></li>
+                    <li><a href="#">Dúvidas</a></li>
+                    <li><a href="#">Feedback</a></li>
+                </ul>
+            </div>
+            
+            <div class="darkLight-searchBox">
+                <div class="dark-light">
+                    <!-- Ícone Lua (SVG Nativo) -->
+                    <svg class="moon" viewBox="0 0 24 24"><path d="M12 11.807A9.002 9.002 0 0 1 10.049 2a9.944 9.944 0 0 0-5.244 2.193C.961 7.472.71 13.568 4.212 17.07c3.5 3.5 9.597 3.25 12.877-.594A9.943 9.943 0 0 0 19.28 11.23a9.006 9.006 0 0 1-7.28.577z"/></svg>
+                    <!-- Ícone Sol (SVG Nativo) -->
+                    <svg class="sun" viewBox="0 0 24 24"><path d="M6.993 12c0 2.761 2.246 5 5.007 5s5.007-2.239 5.007-5-2.246-5-5.007-5-5.007 2.239-5.007 5zM11 2h2v3h-2zm0 14h2v3h-2zm-7-5h3v2H4zm13 0h3v2h-3zM5.637 5.635l2.121 2.122-1.414 1.414-2.122-2.122zm10.535 10.536 2.122 2.121-1.414 1.414-2.122-2.121zm-10.535 8.414l-2.122-2.122 1.414-1.414 2.122 2.122zm12.656-12.657 1.414-1.414 2.122 2.122-1.414 1.414z"/></svg>
+                </div>
+                <div class="searchBox">
+                    <div class="searchToggle">
+                        <!-- Ícone Cancelar X da Busca (SVG Nativo) -->
+                        <svg class="cancel" viewBox="0 0 24 24"><path d="m16.192 6.344-4.192 4.192-4.192-4.192-1.414 1.414 4.192 4.192-4.192 4.192 1.414 1.414 4.192-4.192 4.192 4.192 1.414-1.414-4.192-4.192 4.192-4.192z"/></svg>
+                        <!-- Ícone Lupa Principal (SVG Nativo) -->
+                        <svg class="search" viewBox="0 0 24 24"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"/></svg>
+                    </div>
+                    <div class="search-field">
+                        <input type="text" placeholder="Buscar...">
+                        <!-- Ícone Lupa Interna do Input (SVG Nativo) -->
+                        <svg class="input-search-icon" viewBox="0 0 24 24"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"/></svg>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </nav>
+
+    <!-- ROBOZINHO IDÊNTICO À IMAGEM EM VETOR SVG -->
+    <button class="btn-abrir-chat-principal" onclick="alternarJanelaIframe()" aria-label="Abrir Chatbot">
+        <svg viewBox="0 0 512 512">
+            <!-- Corpo e Pescoço -->
+            <path d="M256 310v35h20v-35z" fill="#e1f5fe"/>
+            <path d="M236 310v35h20v-35z" fill="#b3e5fc"/>
+            <path d="M256 328c-71.8 0-130 58.2-130 130v54h130V328z" fill="#e1f5fe"/>
+            <path d="M256 328v184h130v-54c0-71.8-58.2-130-130-130z" fill="#90caf9"/>
+            <!-- Cabeça Externa -->
+            <path d="M256 81c-82.3 0-142 55.4-142 110.5s59.7 110.5 142 110.5z" fill="#e1f5fe"/>
+            <path d="M256 81v221c82.3 0 142-55.4 142-110.5S338.3 81 256 81z" fill="#b3e5fc"/>
+            <!-- Visor Escuro -->
+            <path d="M256 125c-54.1 0-98 29.5-98 66s43.9 66 98 66z" fill="#1a0066"/>
+            <path d="M256 125v132c54.1 0 98-29.5 98-66s-43.9-66-98-66z" fill="#12004d"/>
+            <!-- Olhos Verdes -->
+            <path d="M210 143h16v40h-16z" fill="#5cb82a"/>
+            <path d="M278 143h16v40h-16z" fill="#4da31f"/>
+            <!-- Sorriso Verde -->
+            <path d="M214 209c0 10.5 18.8 19 42 19v-19z" fill="#5cb82a"/>
+            <path d="M256 209v19c23.2 0 42-8.5 42-19z" fill="#4da31f"/>
+            <!-- Orelhas/Fones Laterais -->
+            <path d="M116 172c-15.5 0-28 11.2-28 25s12.5 25 28 25z" fill="#311b92"/>
+            <path d="M116 172v50c6.6 0 12-11.2 12-25s-5.4-25-12-25z" fill="#90caf9"/>
+            <path d="M396 172v50c15.5 0 28-11.2 28-25s-12.5-25-28-25z" fill="#1a0066"/>
+            <path d="M396 172c-6.6 0-12 11.2-12 25s5.4 25 12 25z" fill="#64b5f6"/>
+            <!-- Microfone do Headset -->
+            <path d="M394 235c0 23.2-18.8 42-42 42h-40v-14h40c15.5 0 28-12.5 28-28z" fill="#1a0066"/>
+            <path d="M312 263c-12.2 0-22 9.8-22 22s9.8 22 22 22 22-9.8 22-22-9.8-22-22-22z" fill="#1a0066"/>
+        </svg>
+    </button>
+
+    <!-- Container oculto que carrega a janela do chat -->
+    <div class="janela-chat-iframe" id="containerIframeChat">
+        <iframe src="contato.html"></iframe>
+    </div>
+
+    <script>
+        // Função para abrir e fechar a janela do chat ao clicar no robô
+        function alternarJanelaIframe() {
+            const container = document.getElementById('containerIframeChat');
+            if (container.style.display === 'block') {
+                container.style.display = 'none';
+            } else {
+                container.style.display = 'block';
+            }
+        }
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>

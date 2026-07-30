@@ -1,44 +1,1200 @@
 <!DOCTYPE html>
-<html lang="pt-Br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Style.css">
-    <!--boxicons css-->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
- 
-    <title>Solo em equílibrio</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Solo em Equilíbrio</title>
+    <style>
+        /* ==================== ESTILOS DO CHAT / ROBÔ FLUTUANTE ==================== */
+        
+        /* BOTÃO FLUTUANTE DO CHAT (Círculo verde idêntico à imagem) */
+        .btn-abrir-chat-principal {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #5cb82a; /* Verde vivo da imagem */
+            border: none;
+            width: 70px;  
+            height: 70px; 
+            border-radius: 50%; /* Círculo perfeito */
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s, background-color 0.2s;
+            padding: 0;
+        }
+
+        .btn-abrir-chat-principal:hover {
+            background-color: #4da31f;
+            transform: scale(1.08); /* Zoom ao passar o mouse */
+        }
+
+        /* Ajuste de tamanho do vetor do robozinho */
+        .btn-abrir-chat-principal svg {
+            width: 58px;
+            height: 58px;
+        }
+
+        /* CONTAINER FLUTUANTE DO IFRAME (JANELA DO CHAT) */
+        .janela-chat-iframe {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            z-index: 10000;
+            background: transparent !important; 
+        }
+
+        .janela-chat-iframe iframe {
+            width: 400px;  
+            height: 500px; 
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            background-color: transparent !important; 
+        }
+    </style>
 </head>
 <body>
-   
     <nav>
         <div class="nav-bar">
-            <span class="logo"><a href="#"> Solo em equíbrio</a> </span>
+            <!-- Ícone Menu Hambúrguer (SVG Nativo) -->
+            <svg class="sidebarOpen" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+            
+            <span class="logo"><a>Solo em Equilíbrio</a></span>
+            
             <div class="menu">
-                <!--ul class="nav-links">
-                    <li><a href="#">Início</a></li>
+                <div class="logo-toggle">
+                    <span class="logo"><a>Solo em Equilíbrio</a></span>
+                    <!-- Ícone Fechar X do Menu (SVG Nativo) -->
+                    <svg class="sidebarClose" viewBox="0 0 24 24"><path d="m16.192 6.344-4.192 4.192-4.192-4.192-1.414 1.414 4.192 4.192-4.192 4.192 1.414 1.414 4.192-4.192 4.192 4.192 1.414-1.414-4.192-4.192 4.192-4.192z"/></svg>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
                     <li><a href="#">Sobre</a></li>
-                    <li><a href="#">Portifólio</a></li>
+                    <li><a href="portifolio.html">Portifólio</a></li>
                     <li><a href="#">Equipe</a></li>
-                    <li><a href="#">Contato</a></li>
                     <li><a href="#">Informações</a></li>
                     <li><a href="#">Dúvidas</a></li>
                     <li><a href="#">Feedback</a></li>
-                </ul-->
+                </ul>
             </div>
+            
             <div class="darkLight-searchBox">
                 <div class="dark-light">
-                    <i class="bx bx-moon moon"></i>
-                    <i class="bx bx-sun sun"></i>
+                    <!-- Ícone Lua (SVG Nativo) -->
+                    <svg class="moon" viewBox="0 0 24 24"><path d="M12 11.807A9.002 9.002 0 0 1 10.049 2a9.944 9.944 0 0 0-5.244 2.193C.961 7.472.71 13.568 4.212 17.07c3.5 3.5 9.597 3.25 12.877-.594A9.943 9.943 0 0 0 19.28 11.23a9.006 9.006 0 0 1-7.28.577z"/></svg>
+                    <!-- Ícone Sol (SVG Nativo) -->
+                    <svg class="sun" viewBox="0 0 24 24"><path d="M6.993 12c0 2.761 2.246 5 5.007 5s5.007-2.239 5.007-5-2.246-5-5.007-5-5.007 2.239-5.007 5zM11 2h2v3h-2zm0 14h2v3h-2zm-7-5h3v2H4zm13 0h3v2h-3zM5.637 5.635l2.121 2.122-1.414 1.414-2.122-2.122zm10.535 10.536 2.122 2.121-1.414 1.414-2.122-2.121zm-10.535 8.414l-2.122-2.122 1.414-1.414 2.122 2.122zm12.656-12.657 1.414-1.414 2.122 2.122-1.414 1.414z"/></svg>
                 </div>
-                  <div class="searchBox">
-                <div class="searchToggle">
-                    <i class="bx bx-x cancel"></i>
-                    <i class="bx bx-search search"></i>
+                <div class="searchBox">
+                    <div class="searchToggle">
+                        <!-- Ícone Cancelar X da Busca (SVG Nativo) -->
+                        <svg class="cancel" viewBox="0 0 24 24"><path d="m16.192 6.344-4.192 4.192-4.192-4.192-1.414 1.414 4.192 4.192-4.192 4.192 1.414 1.414 4.192-4.192 4.192 4.192 1.414-1.414-4.192-4.192 4.192-4.192z"/></svg>
+                        <!-- Ícone Lupa Principal (SVG Nativo) -->
+                        <svg class="search" viewBox="0 0 24 24"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"/></svg>
+                    </div>
+                    <div class="search-field">
+                        <input type="text" placeholder="Buscar...">
+                        <!-- Ícone Lupa Interna do Input (SVG Nativo) -->
+                        <svg class="input-search-icon" viewBox="0 0 24 24"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"/></svg>
+                    </div>
                 </div>
-            </div>
+            </div> 
         </div>
     </nav>
+
+    <!-- ROBOZINHO IDÊNTICO À IMAGEM EM VETOR SVG -->
+    <button class="btn-abrir-chat-principal" onclick="alternarJanelaIframe()" aria-label="Abrir Chatbot">
+        <svg viewBox="0 0 512 512">
+            <!-- Corpo e Pescoço -->
+            <path d="M256 310v35h20v-35z" fill="#e1f5fe"/>
+            <path d="M236 310v35h20v-35z" fill="#b3e5fc"/>
+            <path d="M256 328c-71.8 0-130 58.2-130 130v54h130V328z" fill="#e1f5fe"/>
+            <path d="M256 328v184h130v-54c0-71.8-58.2-130-130-130z" fill="#90caf9"/>
+            <!-- Cabeça Externa -->
+            <path d="M256 81c-82.3 0-142 55.4-142 110.5s59.7 110.5 142 110.5z" fill="#e1f5fe"/>
+            <path d="M256 81v221c82.3 0 142-55.4 142-110.5S338.3 81 256 81z" fill="#b3e5fc"/>
+            <!-- Visor Escuro -->
+            <path d="M256 125c-54.1 0-98 29.5-98 66s43.9 66 98 66z" fill="#1a0066"/>
+            <path d="M256 125v132c54.1 0 98-29.5 98-66s-43.9-66-98-66z" fill="#12004d"/>
+            <!-- Olhos Verdes -->
+            <path d="M210 143h16v40h-16z" fill="#5cb82a"/>
+            <path d="M278 143h16v40h-16z" fill="#4da31f"/>
+            <!-- Sorriso Verde -->
+            <path d="M214 209c0 10.5 18.8 19 42 19v-19z" fill="#5cb82a"/>
+            <path d="M256 209v19c23.2 0 42-8.5 42-19z" fill="#4da31f"/>
+            <!-- Orelhas/Fones Laterais -->
+            <path d="M116 172c-15.5 0-28 11.2-28 25s12.5 25 28 25z" fill="#311b92"/>
+            <path d="M116 172v50c6.6 0 12-11.2 12-25s-5.4-25-12-25z" fill="#90caf9"/>
+            <path d="M396 172v50c15.5 0 28-11.2 28-25s-12.5-25-28-25z" fill="#1a0066"/>
+            <path d="M396 172c-6.6 0-12 11.2-12 25s5.4 25 12 25z" fill="#64b5f6"/>
+            <!-- Microfone do Headset -->
+            <path d="M394 235c0 23.2-18.8 42-42 42h-40v-14h40c15.5 0 28-12.5 28-28z" fill="#1a0066"/>
+            <path d="M312 263c-12.2 0-22 9.8-22 22s9.8 22 22 22 22-9.8 22-22-9.8-22-22-22z" fill="#1a0066"/>
+        </svg>
+    </button>
+
+
+    <!-- Container oculto que carrega a janela do chat -->
+    <div class="janela-chat-iframe" id="containerIframeChat">
+        <iframe src="contato.html"></iframe>
+    </div>
+
+    <script>
+        // Função para abrir e fechar a janela do chat ao clicar no robô
+        function alternarJanelaIframe() {
+            const container = document.getElementById('containerIframeChat');
+            if (container.style.display === 'block') {
+                container.style.display = 'none';
+            } else {
+                container.style.display = 'block';
+            }
+        }
+    </script>
+
     <script src="script.js"></script>
+
+<br>
+<br>
+<br>
+
+<!-- ==================== NOVO COMPONENTE: CARD FIXO NO MEIO COM SELEÇÃO POR SETAS ==================== -->
+<div class="container-centralizador-isolado">
+    
+    <!-- Seta Esquerda -->
+    <button class="seta-controle-fixa seta-esq" onclick="mudarConteudoCard(-1)" aria-label="Anterior">
+        <svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg>
+    </button>
+
+    <!-- O CARD ÚNICO QUE FICA FIXO NO MEIO (AGORA ARREDONDADO) -->
+    <div class="meu-card-central-fixo">
+        <a href="Card-central 1.html" id="linkCardFixo" class="link-card-isolado">
+            <div class="wrapper-foto-isolada">
+                <span id="nomeFotoFixo" class="label-foto-isolada">nome-da-foto-central.jpg</span>
+                <img id="imgCardFixo" src="sua-imagem-central.jpg" alt="Imagem do Card">
+            </div>
+            <div class="info-card-isolado">
+                <div class="ao-lado-preco-estrela">
+                    <div id="estrelasCardFixo" class="estrelas-isoladas">★★★★★</div>
+                    <div id="precoCardFixo" class="preco-isolado">$240.00</div>
+                </div>
+                <h3 id="tituloCardFixo">Título do Card-central</h3>
+                <p id="descricaoCardFixo">Descrição rápida do conteúdo aqui.</p>
+                <div id="reviewsCardFixo" class="reviews-isoladas">Reviews (24)</div>
+            </div>
+        </a>
+        
+
+    </div>
+
+    <!-- Seta Direita -->
+    <button class="seta-controle-fixa seta-dir" onclick="mudarConteudoCard(1)" aria-label="Próximo">
+        <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+    </button>
+</div>
+
+<!-- ==================== ESTILOS CSS COMPLETAMENTE ISOLADOS ==================== -->
+<style>
+    /* Container que junta as setas e o card no meio da seção */
+    .container-centralizador-isolado {
+        position: relative;
+        width: 100%;
+        min-height: 480px; /* Altura suficiente para o card respirar */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 50px auto;
+        background-color: transparent;
+    }
+
+    /* O Card - Fica estático no centro e nunca sofre cortes */
+    .meu-card-central-fixo {
+        width: 320px;
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        border-radius: 12px; /* Cantos arredondados aplicados aqui */
+        overflow: hidden; /* Garante que a foto interna também curve nos cantos superiores */
+        z-index: 2;
+        transition: transform 0.2s ease, box-shadow 0.2s ease; /* Transição para o efeito hover */
+    }
+
+    /* NOVO: Zoom e sombra extra ao passar o mouse no card */
+    .meu-card-central-fixo:hover {
+        transform: scale(1.04); /* Zoom suave idêntico ao pedido */
+        box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    }
+
+    .link-card-isolado {
+        text-decoration: none;
+        color: #212529;
+        display: block;
+    }
+
+    .wrapper-foto-isolada {
+        position: relative;
+        width: 100%;
+        height: 250px;
+        background-color: #f5f5f5;
+    }
+
+    .wrapper-foto-isolada img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .label-foto-isolada {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: rgba(0,0,0,0.6);
+        color: #fff;
+        padding: 3px 8px;
+        font-size: 11px;
+        border-radius: 4px;
+    }
+
+    .info-card-isolado {
+        padding: 20px;
+    }
+
+    .ao-lado-preco-estrela {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .estrelas-isoladas {
+        color: #ffc107;
+        font-size: 14px;
+    }
+
+    .preco-isolado {
+        color: #888888;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .info-card-isolado h3 {
+        font-size: 18px;
+        margin: 0 0 10px 0;
+        font-weight: 500;
+    }
+
+    .info-card-isolado p {
+        color: #697582;
+        font-size: 14px;
+        line-height: 1.5;
+        margin: 0 0 15px 0;
+    }
+
+    .reviews-isoladas {
+        color: #a3b1bf;
+        font-size: 12px;
+    }
+
+    /* Setas de Controle Laterais */
+    .seta-controle-fixa {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: #5cb82a;
+        border: none;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        transition: background-color 0.2s, transform 0.2s; /* Adicionada transição de transform */
+    }
+
+    /* NOVO: Ajuste do hover mantendo o translateY essencial das setas */
+    .seta-controle-fixa:hover {
+        background-color: #4da31f;
+        transform: translateY(-50%) scale(1.08); /* Zoom preservando a centralização vertical */
+    }
+
+    .seta-controle-fixa svg {
+        width: 28px;
+        height: 28px;
+        fill: white;
+    }
+
+    /* Posicionamento das setas nas laterais do card */
+    .seta-esq { left: calc(50% - 220px); }
+    .seta-dir { right: calc(50% - 220px); }
+</style>
+
+<!-- ==================== JAVASCRIPT DE BANCO DE DADOS ISOLADO ==================== -->
+<script>
+    // Banco de dados isolado contendo as informações que vão rodar dentro do card fixo
+    const dadosDosCards = [
+        {
+            link: "Card-central 1.html",
+            fotoLabel: "nome-da-foto-1.jpg",
+            imagem: "sua-imagem1.jpg",
+            estrelas: "★★★★★",
+            preco: "$240.00",
+            titulo: "Título do Card 1",
+            descricao: "Descrição rápida do conteúdo aqui.",
+            reviews: "Reviews (24)"
+        },
+        {
+            link: "Card-central 2.html",
+            fotoLabel: "nome-da-foto-2.jpg",
+            imagem: "sua-imagem2.jpg",
+            estrelas: "★★★☆☆",
+            preco: "$480.00",
+            titulo: "Título do Card 2",
+            descricao: "Descrição rápida do conteúdo aqui.",
+            reviews: "Reviews (48)"
+        },
+        {
+            link: "Card-central 3.html",
+            fotoLabel: "nome-da-foto-3.jpg",
+            imagem: "sua-imagem3.jpg",
+            estrelas: "★★★★★",
+            preco: "$360.00",
+            titulo: "Título do Card 3",
+            descricao: "Descrição rápida do conteúdo aqui.",
+            reviews: "Reviews (74)"
+        }
+    ];
+
+    let posicaoAtual = 0;
+
+    function mudarConteudoCard(direcao) {
+        posicaoAtual += direcao;
+
+        // Sistema de loop infinito pelos dados
+        if (posicaoAtual < 0) {
+            posicaoAtual = dadosDosCards.length - 1;
+        } else if (posicaoAtual >= dadosDosCards.length) {
+            posicaoAtual = 0;
+        }
+
+        const cardDados = dadosDosCards[posicaoAtual];
+
+        // Altera apenas o conteúdo do documento interno sem quebrar o layout
+        document.getElementById('linkCardFixo').setAttribute('href', cardDados.link);
+        document.getElementById('nomeFotoFixo').textContent = cardDados.fotoLabel;
+        document.getElementById('imgCardFixo').setAttribute('src', cardDados.imagem);
+        document.getElementById('estrelasCardFixo').textContent = cardDados.estrelas;
+        document.getElementById('precoCardFixo').textContent = cardDados.preco;
+        document.getElementById('tituloCardFixo').textContent = cardDados.titulo;
+        document.getElementById('descricaoCardFixo').textContent = cardDados.descricao;
+        document.getElementById('reviewsCardFixo').textContent = cardDados.reviews;
+    }
+</script>
+<br>
+<br>
+<br>
+
+
+   <!-- ==================== SEÇÃO DO CARROSSEL HORIZONTAL ==================== -->
+    <div class="carousel-container container-frutiferas">
+        <!-- CARD 1 -->
+        <div class="carousel-card">
+            <a href="Card 1 frutíferas.html" class="carousel-card-link">
+                <div class="photo-wrapper">
+                    <span class="carousel-photo-name">nome-da-foto-1.jpg</span>
+                    <img src="sua-imagem1.jpg" alt="Destaque 1">
+                </div>
+                <div class="carousel-info">
+                    <div class="stars-price">
+                        <div class="stars">★★★★★</div>
+                        <div class="price">$240.00</div>
+                    </div>
+                    <h3>Título do Card 1</h3>
+                    <p>Descrição rápida do conteúdo aqui.</p>
+                    <div class="reviews">Reviews (24)</div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- CARD 2 -->
+        <div class="carousel-card">
+            <a href="Card 2 frutíferas.html" class="carousel-card-link">
+                <div class="photo-wrapper">
+                    <span class="carousel-photo-name">nome-da-foto-2.jpg</span>
+                    <img src="sua-imagem2.jpg" alt="Destaque 2">
+                </div>
+                <div class="carousel-info">
+                    <div class="stars-price">
+                        <div class="stars">★★★☆☆</div>
+                        <div class="price">$480.00</div>
+                    </div>
+                    <h3>Título do Card 2</h3>
+                    <p>Descrição rápida do conteúdo aqui.</p>
+                    <div class="reviews">Reviews (48)</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="carousel-card">
+            <a href="Card 3 frutíferas.html" class="carousel-card-link">
+                <div class="photo-wrapper">
+                    <span class="carousel-photo-name">nome-da-foto-3.jpg</span>
+                    <img src="sua-imagem3.jpg" alt="Destaque 3">
+                </div>
+                <div class="carousel-info">
+                    <div class="stars-price">
+                        <div class="stars">★★★★★</div>
+                        <div class="price">$360.00</div>
+                    </div>
+                    <h3>Título do Card 3</h3>
+                    <p>Descrição rápida do conteúdo aqui.</p>
+                    <div class="reviews">Reviews (74)</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="carousel-card">
+            <a href="Card 4 frutíferas.html" class="carousel-card-link">
+                <div class="photo-wrapper">
+                    <span class="carousel-photo-name">nome-da-foto-4.jpg</span>
+                    <img src="sua-imagem4.jpg" alt="Destaque 4">
+                </div>
+                <div class="carousel-info">
+                    <div class="stars-price">
+                        <div class="stars">★★★★☆</div>
+                        <div class="price">$150.00</div>
+                    </div>
+                    <h3>Título do Card 4</h3>
+                    <p>Descrição rápida do conteúdo aqui.</p>
+                    <div class="reviews">Reviews (12)</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- CARD 5 -->
+        <div class="carousel-card">
+            <a href="Card 5 frutíferas.html" class="carousel-card-link">
+                <div class="photo-wrapper">
+                    <span class="carousel-photo-name">nome-da-foto-5.jpg</span>
+                    <img src="sua-imagem5.jpg" alt="Destaque 5">
+                </div>
+                <div class="carousel-info">
+                    <div class="stars-price">
+                        <div class="stars">★★★★★</div>
+                        <div class="price">$200.00</div>
+                    </div>
+                    <h3>Título do Card 5</h3>
+                    <p>Descrição rápida do conteúdo aqui.</p>
+                    <div class="reviews">Reviews (35)</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- CARD 6 -->
+        <div class="carousel-card">
+            <a href="Card 6 frutíferas.html" class="carousel-card-link">
+                <div class="photo-wrapper">
+                    <span class="carousel-photo-name">nome-da-foto-6.jpg</span>
+                    <img src="sua-imagem6.jpg" alt="Destaque 6">
+                </div>
+                <div class="carousel-info">
+                    <div class="stars-price">
+                        <div class="stars">★★☆☆☆</div>
+                        <div class="price">$99.00</div>
+                    </div>
+                    <h3>Título do Card 6</h3>
+                    <p>Descrição rápida do conteúdo aqui.</p>
+                    <div class="reviews">Reviews (18)</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- CARD 7 -->
+        <div class="carousel-card">
+            <a href="Card 7 frutíferas.html" class="carousel-card-link">
+                <div class="photo-wrapper">
+                    <span class="carousel-photo-name">nome-da-foto-7.jpg</span>
+                    <img src="sua-imagem7.jpg" alt="Destaque 7">
+                </div>
+                <div class="carousel-info">
+                    <div class="stars-price">
+                        <div class="stars">★★★★★</div>
+                        <div class="price">$310.00</div>
+                    </div>
+                    <h3>Título do Card 7</h3>
+                    <p>Descrição rápida do conteúdo aqui.</p>
+                    <div class="reviews">Reviews (64)</div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- CARD 8 -->
+        <div class="carousel-card">
+            <a href="Card 8 frutíferas.html" class="carousel-card-link">
+                <div class="photo-wrapper">
+                    <span class="carousel-photo-name">nome-da-foto-8.jpg</span>
+                    <img src="sua-imagem8.jpg" alt="Destaque 8">
+                </div>
+                <div class="carousel-info">
+                    <div class="stars-price">
+                        <div class="stars">★★★★☆</div>
+                        <div class="price">$420.00</div>
+                    </div>
+                    <h3>Título do Card 8</h3>
+                    <p>Descrição rápida do conteúdo aqui.</p>
+                    <div class="reviews">Reviews (51)</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- CARD 9 -->
+        <div class="carousel-card">
+            <a href="Card 9 frutíferas.html" class="carousel-card-link">
+                <div class="photo-wrapper">
+                    <span class="carousel-photo-name">nome-da-foto-9.jpg</span>
+                    <img src="sua-imagem9.jpg" alt="Destaque 9">
+                </div>
+                <div class="carousel-info">
+                    <div class="stars-price">
+                        <div class="stars">★★★★★</div>
+                        <div class="price">$180.00</div>
+                    </div>
+                    <h3>Título do Card 9</h3>
+                    <p>Descrição rápida do conteúdo aqui.</p>
+                    <div class="reviews">Reviews (29)</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- CARD 10 -->
+        <div class="carousel-card">
+            <a href="Card 10 frutíferas.html" class="carousel-card-link">
+                <div class="photo-wrapper">
+                    <span class="carousel-photo-name">nome-da-foto-10.jpg</span>
+                    <img src="sua-imagem10.jpg" alt="Destaque 10">
+                </div>
+                <div class="carousel-info">
+                    <div class="stars-price">
+                        <div class="stars">★★★☆☆</div>
+                        <div class="price">$290.00</div>
+                    </div>
+                    <h3>Título do Card 10</h3>
+                    <p>Descrição rápida do conteúdo aqui.</p>
+                    <div class="reviews">Reviews (42)</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- CARD 11 -->
+        <div class="carousel-card">
+            <a href="Card 11 frutíferas.html" class="carousel-card-link">
+                <div class="photo-wrapper">
+                    <span class="carousel-photo-name">nome-da-foto-11.jpg</span>
+                    <img src="sua-imagem11.jpg" alt="Destaque 11">
+                </div>
+                <div class="carousel-info">
+                    <div class="stars-price">
+                        <div class="stars">★★★★☆</div>
+                        <div class="price">$125.00</div>
+                    </div>
+                    <h3>Título do Card 11</h3>
+                    <p>Descrição rápida do conteúdo aqui.</p>
+                    <div class="reviews">Reviews (15)</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- CARD 12 -->
+        <div class="carousel-card">
+            <a href="Card 12 frutíferas.html" class="carousel-card-link">
+                <div class="photo-wrapper">
+                    <span class="carousel-photo-name">nome-da-foto-12.jpg</span>
+                    <img src="sua-imagem12.jpg" alt="Destaque 12">
+                </div>
+                <div class="carousel-info">
+                    <div class="stars-price">
+                        <div class="stars">★★★★★</div>
+                        <div class="price">$500.00</div>
+                    </div>
+                    <h3>Título do Card 12</h3>
+                    <p>Descrição rápida do conteúdo aqui.</p>
+                    <div class="reviews">Reviews (88)</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+<!-- ==================== SEGUNDO CARROSSEL: NOVA CATEGORIA ==================== -->
+<header style="margin-left: 80px; margin-top: 40px; margin-bottom: 5px;">
+    <h2 class="carousel-categoria-titulo" style="margin: 0; padding: 0;">Medicinais</h2>
+</header>
+
+<div class="carousel-container container-nova-categoria">
+     <!-- CARD 1 -->
+    <div class="carousel-card">
+        <a href="Card 1 medicinais.html" class="carousel-card-link">
+            <div class="photo-wrapper">
+                <span class="carousel-photo-name">nome-da-foto-1.jpg</span>
+                <img src="sua-imagem1.jpg" alt="Destaque 1">
+            </div>
+            <div class="carousel-info">
+                <div class="stars-price">
+                    <div class="stars">★★★★★</div>
+                    <div class="price">$240.00</div>
+                </div>
+                <h3>Título do Card 1</h3>
+                <p>Descrição rápida do conteúdo aqui.</p>
+                <div class="reviews">Reviews (24)</div>
+            </div>
+        </a>
+    </div>
+    
+    <!-- CARD 2 -->
+    <div class="carousel-card">
+        <a href="Card 2 medicinais.html" class="carousel-card-link">
+            <div class="photo-wrapper">
+                <span class="carousel-photo-name">nome-da-foto-2.jpg</span>
+                <img src="sua-imagem2.jpg" alt="Destaque 2">
+            </div>
+            <div class="carousel-info">
+                <div class="stars-price">
+                    <div class="stars">★★★☆☆</div>
+                    <div class="price">$480.00</div>
+                </div>
+                <h3>Título do Card 2</h3>
+                <p>Descrição rápida do conteúdo aqui.</p>
+                <div class="reviews">Reviews (48)</div>
+            </div>
+        </a>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="carousel-card">
+        <a href="Card 3 medicinais.html" class="carousel-card-link">
+            <div class="photo-wrapper">
+                <span class="carousel-photo-name">nome-da-foto-3.jpg</span>
+                <img src="sua-imagem3.jpg" alt="Destaque 3">
+            </div>
+            <div class="carousel-info">
+                <div class="stars-price">
+                    <div class="stars">★★★★★</div>
+                    <div class="price">$360.00</div>
+                </div>
+                <h3>Título do Card 3</h3>
+                <p>Descrição rápida do conteúdo aqui.</p>
+                <div class="reviews">Reviews (74)</div>
+            </div>
+        </a>
+    </div>
+
+    <!-- CARD 4 -->
+    <div class="carousel-card">
+        <a href="Card 4 medicinais.html" class="carousel-card-link">
+            <div class="photo-wrapper">
+                <span class="carousel-photo-name">nome-da-foto-4.jpg</span>
+                <img src="sua-imagem4.jpg" alt="Destaque 4">
+            </div>
+            <div class="carousel-info">
+                <div class="stars-price">
+                    <div class="stars">★★★★☆</div>
+                    <div class="price">$150.00</div>
+                </div>
+                <h3>Título do Card 4</h3>
+                <p>Descrição rápida do conteúdo aqui.</p>
+                <div class="reviews">Reviews (12)</div>
+            </div>
+        </a>
+    </div>
+
+    <!-- CARD 5 -->
+    <div class="carousel-card">
+        <a href="Card 5 medicinais.html" class="carousel-card-link">
+            <div class="photo-wrapper">
+                <span class="carousel-photo-name">nome-da-foto-5.jpg</span>
+                <img src="sua-imagem5.jpg" alt="Destaque 5">
+            </div>
+            <div class="carousel-info">
+                <div class="stars-price">
+                    <div class="stars">★★★★★</div>
+                    <div class="price">$200.00</div>
+                </div>
+                <h3>Título do Card 5</h3>
+                <p>Descrição rápida do conteúdo aqui.</p>
+                <div class="reviews">Reviews (35)</div>
+            </div>
+        </a>
+    </div>
+
+    <!-- CARD 6 -->
+    <div class="carousel-card">
+        <a href="Card 6 medicinais.html" class="carousel-card-link">
+            <div class="photo-wrapper">
+                <span class="carousel-photo-name">nome-da-foto-6.jpg</span>
+                <img src="sua-imagem6.jpg" alt="Destaque 6">
+            </div>
+            <div class="carousel-info">
+                <div class="stars-price">
+                    <div class="stars">★★☆☆☆</div>
+                    <div class="price">$99.00</div>
+                </div>
+                <h3>Título do Card 6</h3>
+                <p>Descrição rápida do conteúdo aqui.</p>
+                <div class="reviews">Reviews (18)</div>
+            </div>
+        </a>
+    </div>
+
+    <!-- CARD 7 -->
+    <div class="carousel-card">
+        <a href="Card 7 medicinais.html" class="carousel-card-link">
+            <div class="photo-wrapper">
+                <span class="carousel-photo-name">nome-da-foto-7.jpg</span>
+                <img src="sua-imagem7.jpg" alt="Destaque 7">
+            </div>
+            <div class="carousel-info">
+                <div class="stars-price">
+                    <div class="stars">★★★★★</div>
+                    <div class="price">$310.00</div>
+                </div>
+                <h3>Título do Card 7</h3>
+                <p>Descrição rápida do conteúdo aqui.</p>
+                <div class="reviews">Reviews (64)</div>
+            </div>
+        </a>
+    </div>
+    
+    <!-- CARD 8 -->
+    <div class="carousel-card">
+        <a href="Card 8 medicinais.html" class="carousel-card-link">
+            <div class="photo-wrapper">
+                <span class="carousel-photo-name">nome-da-foto-8.jpg</span>
+                <img src="sua-imagem8.jpg" alt="Destaque 8">
+            </div>
+            <div class="carousel-info">
+                <div class="stars-price">
+                    <div class="stars">★★★★☆</div>
+                    <div class="price">$420.00</div>
+                </div>
+                <h3>Título do Card 8</h3>
+                <p>Descrição rápida do conteúdo aqui.</p>
+                <div class="reviews">Reviews (51)</div>
+            </div>
+        </a>
+    </div>
+
+    <!-- CARD 9 -->
+    <div class="carousel-card">
+        <a href="Card 9 medicinais.html" class="carousel-card-link">
+            <div class="photo-wrapper">
+                <span class="carousel-photo-name">nome-da-foto-9.jpg</span>
+                <img src="sua-imagem9.jpg" alt="Destaque 9">
+            </div>
+            <div class="carousel-info">
+                <div class="stars-price">
+                    <div class="stars">★★★★★</div>
+                    <div class="price">$180.00</div>
+                </div>
+                <h3>Título do Card 9</h3>
+                <p>Descrição rápida do conteúdo aqui.</p>
+                <div class="reviews">Reviews (29)</div>
+            </div>
+        </a>
+    </div>
+
+    <!-- CARD 10 -->
+    <div class="carousel-card">
+        <a href="Card 10 medicinais.html" class="carousel-card-link">
+            <div class="photo-wrapper">
+                <span class="carousel-photo-name">nome-da-foto-10.jpg</span>
+                <img src="sua-imagem10.jpg" alt="Destaque 10">
+            </div>
+            <div class="carousel-info">
+                <div class="stars-price">
+                    <div class="stars">★★★☆☆</div>
+                    <div class="price">$290.00</div>
+                </div>
+                <h3>Título do Card 10</h3>
+                <p>Descrição rápida do conteúdo aqui.</p>
+                <div class="reviews">Reviews (42)</div>
+            </div>
+        </a>
+    </div>
+
+    <!-- CARD 11 -->
+    <div class="carousel-card">
+        <a href="Card 11 medicinais.html" class="carousel-card-link">
+            <div class="photo-wrapper">
+                <span class="carousel-photo-name">nome-da-foto-11.jpg</span>
+                <img src="sua-imagem11.jpg" alt="Destaque 11">
+            </div>
+            <div class="carousel-info">
+                <div class="stars-price">
+                    <div class="stars">★★★★☆</div>
+                    <div class="price">$125.00</div>
+                </div>
+                <h3>Título do Card 11</h3>
+                <p>Descrição rápida do conteúdo aqui.</p>
+                <div class="reviews">Reviews (15)</div>
+            </div>
+        </a>
+    </div>
+
+    <!-- CARD 12 -->
+    <div class="carousel-card">
+        <a href="Card 12 medicinais.html" class="carousel-card-link">
+            <div class="photo-wrapper">
+                <span class="carousel-photo-name">nome-da-foto-12.jpg</span>
+                <img src="sua-imagem12.jpg" alt="Destaque 12">
+            </div>
+            <div class="carousel-info">
+                <div class="stars-price">
+                    <div class="stars">★★★★★</div>
+                    <div class="price">$500.00</div>
+                </div>
+                <h3>Título do Card 12</h3>
+                <p>Descrição rápida do conteúdo aqui.</p>
+                <div class="reviews">Reviews (88)</div>
+            </div>
+        </a>
+    </div>
+</div>
+</main>
+
+
+<style>
+/* Margem para o conteúdo não ficar escondido atrás do menu nav fixo */
+.conteudo-principal {
+  padding-top: 90px; 
+  font-family: sans-serif;
+}
+
+/* Container do Carrossel */
+.carousel-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 20px;
+  padding: 20px;
+  scroll-behavior: smooth;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Oculta as barras de rolagem mantendo a função ativa */
+.carousel-container::-webkit-scrollbar {
+  display: none;
+}
+.carousel-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Cards Individuais */
+.carousel-card {
+  flex: 0 0 300px; /* Largura fixa de cada card */
+  scroll-snap-align: start;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s;
+}
+
+.carousel-card:hover {
+  transform: translateY(-5px); /* Pequeno efeito flutuante ao passar o mouse */
+}
+
+/* Container da Foto para permitir o posicionamento do nome */
+.photo-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+}
+
+/* Espaço para o Nome da Foto */
+.carousel-photo-name {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.7); /* Fundo escuro transparente */
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-family: monospace; /* Fonte estilo código para nomes de arquivos */
+  pointer-events: none; /* Garante que o clique passe direto para o card */
+  z-index: 2;
+}
+
+/* Imagens dos Cards */
+.carousel-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Faz a imagem cortar proporcionalmente sem amassar */
+  display: block;
+  background-color: #eee; /* Fundo cinza padrão */
+}
+
+/* Textos informativos abaixo da imagem */
+.carousel-info {
+  padding: 15px;
+}
+
+.carousel-info h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.carousel-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.4;
+} /* Corrigido: Chave fechada para não isolar o código abaixo */
+
+/* Estilização do Título da Categoria com Recuo para a Direita */
+.carousel-categoria-titulo {
+    margin: 20px 0 0 10%; /* O '10%' empurra o texto para a direita em relação à tela */
+    padding: 0 20px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--card-title, #054905);
+    text-align: left; /* Garante o alinhamento correto à esquerda do bloco */
+}
+
+/* Alinhamento dos novos componentes dos cards baseado no modelo Zay */
+.carousel-card-link {
+    text-decoration: none;
+    color: #212529;
+    display: block;
+}
+
+.carousel-info {
+    padding: 15px;
+}
+
+.stars-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.stars {
+    color: #ffc107; /* Cor dourada das estrelas */
+    font-size: 14px;
+}
+
+.price {
+    color: #888888; /* Cor cinza do preço */
+    font-size: 14px;
+}
+
+.carousel-info h3 {
+    font-size: 18px;
+    margin: 0 0 8px 0;
+    font-weight: 500;
+}
+
+.carousel-info p {
+    color: #697582;
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 0 0 12px 0;
+}
+
+.reviews {
+    color: #a3b1bf;
+    font-size: 12px;
+}
+
+</style>
+
+<link rel="stylesheet" href="style1.css">
+
+    <script>
+// ==================== JAVASCRIPT DO CARROSSEL (RODA DO MOUSE) ====================
+// Seleciona todos os carrosséis da página
+const carrosseis = document.querySelectorAll('.carousel-container');
+
+carrosseis.forEach((carrossel) => {
+    /* MOVIMENTO AO RODAR A RODA DO MOUSE (SCROLL WHEEL) */
+    carrossel.addEventListener('wheel', (e) => {
+        // Se o usuário estiver rodando o scroll verticalmente, transforma em rolagem horizontal
+        if (e.deltaY !== 0) {
+            e.preventDefault(); // Impede a página de rolar para baixo
+            carrossel.style.scrollSnapType = 'none'; // Desativa o imã temporariamente para suavizar
+            
+            // Move o carrossel baseado na força da rolagem
+            carrossel.scrollLeft += e.deltaY;
+            
+            // Cria um pequeno atraso para reativar o imã (scroll-snap) após o usuário parar de rodar
+            clearTimeout(carrossel.isScrolling);
+            carrossel.isScrolling = setTimeout(() => {
+                carrossel.style.scrollSnapType = 'x mandatory';
+            }, 60);
+        }
+    }, { passive: false }); // Garante o funcionamento perfeito do preventDefault
+});
+</script>
+
+
+
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
+
+    <br>
+    <br>
+    <br>
+    
+    <!-- ==================== CONTAINER DO RODAPÉ (FOOTER) ==================== -->
+<footer class="rodape-zay-shop">
+    <div class="rodape-grid">
+        
+        <!-- COLUNA 1: Nome da Loja e Contatos -->
+        <div class="rodape-coluna">
+            <h2 class="rodape-logo-titulo">Zay Shop</h2>
+            <ul class="rodape-lista-contatos">
+                <li><span class="icon-emoji">📍</span> 123 Consectetur at ligula 10660</li>
+                <li><span class="icon-emoji">📞</span> 010-020-0340</li>
+                <li><span class="icon-emoji">✉️</span> info@company.com</li>
+            </ul>
+        </div>
+
+        <!-- COLUNA 2: Categorias/Produtos -->
+        <div class="rodape-coluna">
+            <h3 class="rodape-coluna-titulo">Products</h3>
+            <ul class="rodape-links-lista">
+                <li><a href="#">Luxury</a></li>
+                <li><a href="#">Sport Wear</a></li>
+                <li><a href="#">Men's Shoes</a></li>
+                <li><a href="#">Women's Shoes</a></li>
+                <li><a href="#">Dress Shoes</a></li>
+                <li><a href="#">Gym Accessories</a></li>
+                <li><a href="#">Sport Shoes</a></li>
+            </ul>
+        </div>
+
+        <!-- COLUNA 3: Informações Adicionais -->
+        <div class="rodape-coluna">
+            <h3 class="rodape-coluna-titulo">Further Info</h3>
+            <ul class="rodape-links-lista">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Shop Locations</a></li>
+                <li><a href="#">FAQs</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+
+    </div>
+</footer>
+
+<!-- ==================== CSS ISOLADO DO RODAPÉ ==================== -->
+<style>
+    /* Fundo escuro total do rodapé baseado na imagem */
+    .rodape-zay-shop {
+        background-color: #212934;
+        color: #cfd6e0;
+        padding: 60px 8% 50px 8%;
+        font-family: sans-serif;
+    }
+
+    /* Grid que divide as 3 colunas proporcionalmente */
+    .rodape-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Estilização da Coluna 1 (Título Verde) */
+    .rodape-logo-titulo {
+        color: #5cb82a; /* Verde exato da marca na imagem */
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin: 0 0 20px 0;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #2d3846; /* Linha sutil de divisão */
+    }
+
+    /* Estilização das Colunas 2 e 3 (Títulos Brancos) */
+    .rodape-coluna-titulo {
+        color: #ffffff;
+        font-size: 1.3rem;
+        font-weight: 500;
+        margin: 0 0 20px 0;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #2d3846; /* Linha sutil de divisão */
+    }
+
+    /* Configurações das listas */
+    .rodape-lista-contatos, 
+    .rodape-links-lista {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Itens da lista de contato (Texto puro) */
+    .rodape-lista-contatos li {
+        font-size: 0.95rem;
+        margin-bottom: 14px;
+        color: #cfd6e0;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Alinhamento dos emojis de contato */
+    .icon-emoji {
+        margin-right: 10px;
+        font-size: 1.1rem;
+    }
+
+    /* Itens com links de navegação */
+    .rodape-links-lista li {
+        margin-bottom: 12px;
+    }
+
+    /* Links do rodapé e efeito ao passar o mouse */
+    .rodape-links-lista li a {
+        color: #cfd6e0;
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: color 0.2s ease;
+    }
+
+    .rodape-links-lista li a:hover {
+        color: #5cb82a; /* Link acende em verde ao passar o mouse */
+    }
+
+    /* Ajuste para telas pequenas de celular não quebrarem o alinhamento */
+    @media (max-width: 768px) {
+        .rodape-zay-shop {
+            padding: 40px 5%;
+        }
+        .rodape-grid {
+            gap: 30px;
+        }
+    }
+</style>
+
 </body>
 </html>

@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style1.css">
+  <title>Solo em Equilíbrio</title>
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-bar">
+      <!-- Ícone Menu Hambúrguer (SVG Nativo) -->
+      <svg class="sidebarOpen" viewBox="0 0 24 24">
+        <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" />
+      </svg>
+      <span class="logo">
+
+        <img src="logo.png" alt="Logo Solo em Equilíbrio" class="logo-img">
+
+      </span>
+      <style>
+        .logo a {
+          display: flex;
+          align-items: center;
+          gap: 50px;
+          /* Distância entre o círculo da imagem e o texto */
+          text-decoration: none;
+        }
+
+        .logo-img {
+          height: 70px;
+          /* Altura ideal proporcional à barra de navegação */
+          width: 70px;
+          /* Largura fixa igual à altura para manter a proporção */
+          border-radius: 60%;
+          /* Corta a imagem em um círculo perfeito */
+          object-fit: cover;
+          /* Impede que a imagem fique esticada ou distorcida */
+        }
+      </style>
+
+
+      <span class="logo"><a>Solo em Equilíbrio</a></span>
+
+      <div class="menu">
+        <div class="logo-toggle">
+
+          <span class="logo"><a>Solo em Equilíbrio</a></span>
+          <!-- Ícone Fechar X do Menu (SVG Nativo) -->
+          <svg class="sidebarClose" viewBox="0 0 24 24">
+            <path
+              d="m16.192 6.344-4.192 4.192-4.192-4.192-1.414 1.414 4.192 4.192-4.192 4.192 1.414 1.414 4.192-4.192 4.192 4.192 1.414-1.414-4.192-4.192 4.192-4.192z" />
+          </svg>
+        </div>
+        <ul class="nav-links">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="portifolio.html">Sobre nós</a></li>
+          <li><a
+              href="https://www.figma.com/board/VVpzUewfq3djYUKpHdnKAn/Untitled?node-id=0-1&t=hrrPq4R8Fl5tFEDk-1">Kanban</a>
+          </li>
+          <li><a href="#">Equipe</a></li>
+        </ul>
+      </div>
+
+      <div class="darkLight-searchBox">
+        <div class="dark-light">
+          <!-- Ícone Lua (SVG Nativo) -->
+          <svg class="moon" viewBox="0 0 24 24">
+            <path
+              d="M12 11.807A9.002 9.002 0 0 1 10.049 2a9.944 9.944 0 0 0-5.244 2.193C.961 7.472.71 13.568 4.212 17.07c3.5 3.5 9.597 3.25 12.877-.594A9.943 9.943 0 0 0 19.28 11.23a9.006 9.006 0 0 1-7.28.577z" />
+          </svg>
+          <!-- Ícone Sol (SVG Nativo) -->
+          <svg class="sun" viewBox="0 0 24 24">
+            <path
+              d="M6.993 12c0 2.761 2.246 5 5.007 5s5.007-2.239 5.007-5-2.246-5-5.007-5-5.007 2.239-5.007 5zM11 2h2v3h-2zm0 14h2v3h-2zm-7-5h3v2H4zm13 0h3v2h-3zM5.637 5.635l2.121 2.122-1.414 1.414-2.122-2.122zm10.535 10.536 2.122 2.121-1.414 1.414-2.122-2.121zm-10.535 8.414l-2.122-2.122 1.414-1.414 2.122 2.122zm12.656-12.657 1.414-1.414 2.122 2.122-1.414 1.414z" />
+          </svg>
+        </div>
+        <div class="searchBox">
+          <div class="searchToggle">
+            <!-- Ícone Cancelar X da Busca (SVG Nativo) -->
+            <svg class="cancel" viewBox="0 0 24 24">
+              <path
+                d="m16.192 6.344-4.192 4.192-4.192-4.192-1.414 1.414 4.192 4.192-4.192 4.192 1.414 1.414 4.192-4.192 4.192 4.192 1.414-1.414-4.192-4.192 4.192-4.192z" />
+            </svg>
+            <!-- Ícone Lupa Principal (SVG Nativo) -->
+            <svg class="search" viewBox="0 0 24 24">
+              <path
+                d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z" />
+            </svg>
+          </div>
+          <div class="search-field">
+            <input type="text" placeholder="Buscar...">
+            <!-- Ícone Lupa Interna do Input (SVG Nativo) -->
+            <svg class="input-search-icon" viewBox="0 0 24 24">
+              <path
+                d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="main-layout">
+
+    <!-- COLUNA DA ESQUERDA: Resumo do TCC -->
+    <div class="left-content">
+      <div class="Sobre nós ▾">
+        <br>
+        <br>
+        <br>
+
+        <h3>Um resumo sobre objetivo desse Portifólio.</h3>
+        <hr>
+        <p>
+          <strong>que é o projeto</strong> <br>
+          Este projeto é uma plataforma web responsiva dedicada à catalogação detalhada da biodiversidade vegetal
+          global.<br> O site funciona como um dicionário digital, organizando informações complexas de forma acessível e
+          intuitiva para o usuário final.<br>
+          <strong> Propósito e Contexto</strong>
+        <ul>
+          <li> Trabalho de Conclusão de Curso (TCC) em Desenvolvimento de Sistemas.</li>
+          <li> Democratizar o acesso ao conhecimento científico e popular sobre botânica.</li>
+          <li>Centralizar dados dispersos em uma única base digital organizada.</li>
+        </ul>
+        <br>
+        <strong>Principais Funcionalidades</strong>
+        <ul>
+          <li> Catálogo completo: busca por nomes científicos e populares de plantas.</li>
+          <li> Guia de cultivo: instruções detalhadas sobre habitat e cuidados específicos.</li>
+          <li> Fichas técnicas: dados sobre propriedades medicinais ou alertas de toxicidade.</li>
+          <li> Interface responsiva: adaptada para navegação em celulares, tablets e computadores.<br></li>
+        </ul>
+
+
+        <hr>
+
+
+
+        </p>
+      </div>
+    </div>
+
+ <style>
+
+      /* ==================== CALENDÁRIO FLUTUANTE ==================== */
+      .btn-abrir-calendario {
+        position: fixed;
+        bottom: 105px;
+        right: 20px;
+        width: 70px;
+        height: 70px;
+        border: none;
+        border-radius: 50%;
+        background-color: #5cb82a;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        z-index: 9998;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        transition: transform 0.2s, background-color 0.2s;
+      }
+
+      .btn-abrir-calendario:hover {
+        background-color: #4da31f;
+        transform: scale(1.08);
+      }
+
+      .btn-abrir-calendario svg {
+        width: 42px;
+        height: 42px;
+        fill: #ffffff;
+      }
+
+      /* Quadrado reduzido e melhor adaptado para não vazar espaço */
+      .calendario-flutuante {
+        display: none !important;
+        position: fixed !important;
+        right: 20px !important; /* Alinhado perfeitamente na mesma margem dos botões */
+        bottom: 185px !important;
+        width: 320px !important; /* CORREÇÃO: Alterado de 280px para 320px conforme solicitado */
+        height: 380px !important; /* CORREÇÃO: Alterado de 330px para 380px conforme solicitado */
+        max-height: 500px !important;
+        overflow-y: auto !important;
+        box-sizing: border-box !important;
+        padding: 10px !important;
+        border-radius: 0 !important; /* Mantido exatamente como você mandou */
+        background: #ffffff !important;
+        box-shadow: 0 6px 25px rgba(0,0,0,0.35) !important;
+        z-index: 10000 !important;
+        float: none !important;
+      }
+
+      /* Alinhamento das proporções quando ativo */
+      .calendario-flutuante.aberto {
+        display: flex !important;
+        width: 320px !important; /* CORREÇÃO: Ajustado para o novo tamanho horizontal estável */
+        height: 380px !important; /* CORREÇÃO: Ajustado para o novo tamanho vertical estável */
+        max-height: 400px !important;
+        border-radius: 0 !important; /* Mantido exatamente como você mandou */
+      }
+
+      /* FORÇA A REMOÇÃO ESTREITA E EXCLUSIVA APENAS DO BOTÃO DO X */
+      .btn-fechar-calendario {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
+
+      @media (max-width: 600px) {
+        .calendario-flutuante {
+          right: 10px !important;
+          bottom: 185px !important;
+          width: calc(100vw - 20px) !important;
+          max-width: 360px !important;
+          height: 480px !important;
+          max-height: 480px !important;
+        }
+      }
+
+      /* ==================== ESTILOS DO CHAT / ROBÔ FLUTUANTE ==================== */
+
+      /* BOTÃO FLUTUANTE DO CHAT (Círculo verde idêntico à imagem) */
+      .btn-abrir-chat-principal {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #5cb82a;
+        /* Verde vivo da imagem */
+        border: none;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        /* Círculo perfeito */
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s, background-color 0.2s;
+        padding: 0;
+      }
+
+      .btn-abrir-chat-principal:hover {
+        background-color: #4da31f;
+        transform: scale(1.08);
+        /* Zoom ao passar o mouse */
+      }
+
+      /* Ajuste de tamanho do vetor do robozinho */
+      .btn-abrir-chat-principal svg {
+        width: 58px;
+        height: 58px;
+      }
+
+      /* CONTAINER FLUTUANTE DO IFRAME (JANELA DO CHAT) */
+      .janela-chat-iframe {
+        display: none;
+        position: fixed;
+        bottom: 100px;
+        right: 20px;
+        z-index: 10000;
+        background: transparent !important;
+      }
+
+      .janela-chat-iframe iframe {
+        width: 400px;
+        height: 480px;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        background-color: transparent !important;
+      }
+</style>
+
+
+
+
+    <!-- BOTÃO FLUTUANTE DO CALENDÁRIO -->
+    <button
+      class="btn-abrir-calendario"
+      id="btnAbrirCalendario"
+      type="button"
+      onclick="alternarCalendario()"
+      aria-label="Abrir Calendário"
+      title="Calendário"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19 4h-1V2h-2v2H8V2H6v2H5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm1 15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9h16v9zm0-11H4V7a1 1 0 0 1 1-1h1v2h2V6h8v2h2V6h1a1 1 0 0 1 1 1v1z"/>
+      </svg>
+    </button>
+
+    <!-- ROBOZINHO IDÊNTICO À IMAGEM EM VETOR SVG -->
+    <button class="btn-abrir-chat-principal" onclick="alternarJanelaIframe()" aria-label="Abrir Chatbot">
+      <svg viewBox="0 0 512 512">
+        <!-- Corpo e Pescoço -->
+        <path d="M256 310v35h20v-35z" fill="#e1f5fe" />
+        <path d="M236 310v35h20v-35z" fill="#b3e5fc" />
+        <path d="M256 328c-71.8 0-130 58.2-130 130v54h130V328z" fill="#e1f5fe" />
+        <path d="M256 328v184h130v-54c0-71.8-58.2-130-130-130z" fill="#90caf9" />
+        <!-- Cabeça Externa -->
+        <path d="M256 81c-82.3 0-142 55.4-142 110.5s59.7 110.5 142 110.5z" fill="#e1f5fe" />
+        <path d="M256 81v221c82.3 0 142-55.4 142-110.5S338.3 81 256 81z" fill="#b3e5fc" />
+        <!-- Visor Escuro -->
+        <path d="M256 125c-54.1 0-98 29.5-98 66s43.9 66 98 66z" fill="#1a0066" />
+        <path d="M256 125v132c54.1 0 98-29.5 98-66s-43.9-66-98-66z" fill="#12004d" />
+        <!-- Olhos Verdes -->
+        <path d="M210 143h16v40h-16z" fill="#5cb82a" />
+        <path d="M278 143h16v40h-16z" fill="#4da31f" />
+        <!-- Sorriso Verde -->
+        <path d="M214 209c0 10.5 18.8 19 42 19v-19z" fill="#5cb82a" />
+        <path d="M256 209v19c23.2 0 42-8.5 42-19z" fill="#4da31f" />
+        <!-- Orelhas/Fones Laterais -->
+        <path d="M116 172c-15.5 0-28 11.2-28 25s12.5 25 28 25z" fill="#311b92" />
+        <path d="M116 172v50c6.6 0 12-11.2 12-25s-5.4-25-12-25z" fill="#90caf9" />
+        <path d="M396 172v50c15.5 0 28-11.2 28-25s-12.5-25-28-25z" fill="#1a0066" />
+        <path d="M396 172c-6.6 0-12 11.2-12 25s5.4 25 12 25z" fill="#64b5f6" />
+        <!-- Microfone do Headset -->
+        <path d="M394 235c0 23.2-18.8 42-42 42h-40v-14h40c15.5 0 28-12.5 28-28z" fill="#1a0066" />
+        <path d="M312 263c-12.2 0-22 9.8-22 22s9.8 22 22 22 22-9.8 22-22-9.8-22-22-22z" fill="#1a0066" />
+      </svg>
+    </button>
+
+    <!-- Container oculto que carrega a janela do chat -->
+    <div class="janela-chat-iframe" id="containerIframeChat">
+      <iframe src="contato.html"></iframe>
+    </div>
+
+    <script>
+      // ==================== CALENDÁRIO FLUTUANTE ====================
+
+      function alternarCalendario() {
+        const calendario = document.getElementById('janelaCalendario');
+
+        if (!calendario) return;
+
+        if (calendario.classList.contains('aberto')) {
+          fecharCalendario();
+        } else {
+          calendario.classList.add('aberto');
+        }
+      }
+
+      function fecharCalendario() {
+        const calendario = document.getElementById('janelaCalendario');
+
+        if (calendario) {
+          calendario.classList.remove('aberto');
+        }
+      }
+
+      // Fecha o calendário ao clicar fora dele.
+      document.addEventListener('click', function(event) {
+        const calendario = document.getElementById('janelaCalendario');
+        const botao = document.getElementById('btnAbrirCalendario');
+
+        if (!calendario || !botao) return;
+        if (!calendario.classList.contains('aberto')) return;
+
+        const clicouDentro =
+          calendario.contains(event.target);
+
+        const clicouNoBotao =
+          botao.contains(event.target);
+
+        if (!clicouDentro && !clicouNoBotao) {
+          fecharCalendario();
+        }
+      });
+
+      // Função para abrir e fechar a janela do chat ao clicar no robô
+
+      function alternarJanelaIframe() {
+        const container = document.getElementById('containerIframeChat');
+        if (container.style.display === 'block') {
+          container.style.display = 'none';
+        } else {
+          container.style.display = 'block';
+        }
+      }
+      // Função para abrir e fechar a caixinha branca ao clicar no botão verde do calendário
+function alternarCalendario() {
+    const calendario = document.querySelector('.calendario-flutuante');
+    if (calendario) {
+        calendario.classList.toggle('aberto');
+    }
+}
+
+// Fecha a caixinha branca se o usuário clicar em qualquer outro lugar fora dela
+document.addEventListener('mousedown', function(event) {
+    const calendario = document.querySelector('.calendario-flutuante');
+    const btnCalendario = document.getElementById('btnAbrirCalendario');
+    
+    // Se o calendário estiver aberto e o clique NÃO for nele e nem no botão verde, ele fecha
+    if (calendario && calendario.classList.contains('aberto')) {
+        if (!calendario.contains(event.target) && !btnCalendario.contains(event.target)) {
+            calendario.classList.remove('aberto');
+        }
+    }
+});
+
+    </script>
+
+    <!-- COLUNA DA DIREITA: Quadrado do Calendário Anual e as duas Setas -->
+    <div class="right-content calendario-flutuante" id="janelaCalendario">
+      <button type="button" class="btn-fechar-calendario" onclick="fecharCalendario()" aria-label="Fechar calendário">×</button>
+      <br>
+      <br>
+      <br>
+      <!-- Controle por Setas (Acima do Quadrado) -->
+      <div class="botoes-navegacao">
+        <button type="button" onclick="mudarMes(-1)">&#10094; Anterior</button>
+        <button type="button" onclick="mudarMes(1)">Próximo &#10095;</button>
+      </div>
+
+      <!-- O Quadrado do Calendário -->
+      <div class="quadrado-calendario" id="box-calendario">
+
+        <!-- JANEIRO -->
+        <table class="calendario-mensal" id="mes-janeiro" border="1">
+          <caption>Janeiro 2026</caption>
+          <thead>
+            <tr>
+              <th>Dom</th>
+              <th>Seg</th>
+              <th>Ter</th>
+              <th>Qua</th>
+              <th>Qui</th>
+              <th>Sex</th>
+              <th>Sáb</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="dia" data-dia="1">1</td>
+              <td class="dia" data-dia="2">2</td>
+              <td class="dia" data-dia="3">3</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="4">4</td>
+              <td class="dia" data-dia="5">5</td>
+              <td class="dia" data-dia="6">6</td>
+              <td class="dia" data-dia="7">7</td>
+              <td class="dia" data-dia="8">8</td>
+              <td class="dia" data-dia="9">9</td>
+              <td class="dia" data-dia="10">10</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="11">11</td>
+              <td class="dia" data-dia="12">12</td>
+              <td class="dia" data-dia="13">13</td>
+              <td class="dia" data-dia="14">14</td>
+              <td class="dia" data-dia="15">15</td>
+              <td class="dia" data-dia="16">16</td>
+              <td class="dia" data-dia="17">17</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="18">18</td>
+              <td class="dia" data-dia="19">19</td>
+              <td class="dia" data-dia="20">20</td>
+              <td class="dia" data-dia="21">21</td>
+              <td class="dia" data-dia="22">22</td>
+              <td class="dia" data-dia="23">23</td>
+              <td class="dia" data-dia="24">24</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="25">25</td>
+              <td class="dia" data-dia="26">26</td>
+              <td class="dia" data-dia="27">27</td>
+              <td class="dia" data-dia="28">28</td>
+              <td class="dia" data-dia="29">29</td>
+              <td class="dia" data-dia="30">30</td>
+              <td class="dia" data-dia="31">31</td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <!-- FEVEREIRO -->
+        <table class="calendario-mensal" id="mes-fevereiro" border="1">
+          <caption>Fevereiro 2026</caption>
+          <thead>
+            <tr>
+              <th>Dom</th>
+              <th>Seg</th>
+              <th>Ter</th>
+              <th>Qua</th>
+              <th>Qui</th>
+              <th>Sex</th>
+              <th>Sáb</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="dia" data-dia="1">1</td>
+              <td class="dia" data-dia="2">2</td>
+              <td class="dia" data-dia="3">3</td>
+              <td class="dia" data-dia="4">4</td>
+              <td class="dia" data-dia="5">5</td>
+              <td class="dia" data-dia="6">6</td>
+              <td class="dia" data-dia="7">7</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="8">8</td>
+              <td class="dia" data-dia="9">9</td>
+              <td class="dia" data-dia="10">10</td>
+              <td class="dia" data-dia="11">11</td>
+              <td class="dia" data-dia="12">12</td>
+              <td class="dia" data-dia="13">13</td>
+              <td class="dia" data-dia="14">14</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="15">15</td>
+              <td class="dia" data-dia="16">16</td>
+              <td class="dia" data-dia="17">17</td>
+              <td class="dia" data-dia="18">18</td>
+              <td class="dia" data-dia="19">19</td>
+              <td class="dia" data-dia="20">20</td>
+              <td class="dia" data-dia="21">21</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="22">22</td>
+              <td class="dia" data-dia="23">23</td>
+              <td class="dia" data-dia="24">24</td>
+              <td class="dia" data-dia="25">25</td>
+              <td class="dia" data-dia="26">26</td>
+              <td class="dia" data-dia="27">27</td>
+              <td class="dia" data-dia="28">28</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- MARÇO -->
+        <table class="calendario-mensal" id="mes-março" border="1">
+          <caption>Março 2026</caption>
+          <thead>
+            <tr>
+              <th>Dom</th>
+              <th>Seg</th>
+              <th>Ter</th>
+              <th>Qua</th>
+              <th>Qui</th>
+              <th>Sex</th>
+              <th>Sáb</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="dia" data-dia="1">1</td>
+              <td class="dia" data-dia="2">2</td>
+              <td class="dia" data-dia="3">3</td>
+              <td class="dia" data-dia="4">4</td>
+              <td class="dia" data-dia="5">5</td>
+              <td class="dia" data-dia="6">6</td>
+              <td class="dia" data-dia="7">7</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="8">8</td>
+              <td class="dia" data-dia="9">9</td>
+              <td class="dia" data-dia="10">10</td>
+              <td class="dia" data-dia="11">11</td>
+              <td class="dia" data-dia="12">12</td>
+              <td class="dia" data-dia="13">13</td>
+              <td class="dia" data-dia="14">14</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="15">15</td>
+              <td class="dia" data-dia="16">16</td>
+              <td class="dia" data-dia="17">17</td>
+              <td class="dia" data-dia="18">18</td>
+              <td class="dia" data-dia="19">19</td>
+              <td class="dia" data-dia="20">20</td>
+              <td class="dia" data-dia="21">21</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="22">22</td>
+              <td class="dia" data-dia="23">23</td>
+              <td class="dia" data-dia="24">24</td>
+              <!-- Célula do Dia 25 com o evento estruturado -->
+              <td class="dia" data-dia="25">
+                <span>25</span>
+                <div class="evento">Segundo entregavel do TCC</div>
+              </td>
+              <td class="dia" data-dia="26">26</td>
+              <td class="dia" data-dia="27">27</td>
+              <td class="dia" data-dia="28">28</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="29">29</td>
+              <td class="dia" data-dia="30">30</td>
+              <td class="dia" data-dia="31">31</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- ABRIL -->
+        <table class="calendario-mensal" id="mes-abril" border="1">
+          <caption>Abril 2026</caption>
+          <thead>
+            <tr>
+              <th>Dom</th>
+              <th>Seg</th>
+              <th>Ter</th>
+              <th>Qua</th>
+              <th>Qui</th>
+              <th>Sex</th>
+              <th>Sáb</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="dia" data-dia="1">1</td>
+              <td class="dia" data-dia="2">2</td>
+              <td class="dia" data-dia="3">3</td>
+              <td class="dia" data-dia="4">4</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="5">5</td>
+              <td class="dia" data-dia="6">6</td>
+              <td class="dia" data-dia="7">7</td>
+              <td class="dia" data-dia="8">8</td>
+              <td class="dia" data-dia="9">9</td>
+              <td class="dia" data-dia="10">10</td>
+              <td class="dia" data-dia="11">11</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="12">12</td>
+              <td class="dia" data-dia="13">13</td>
+              <td class="dia" data-dia="14">14</td>
+              <td class="dia" data-dia="15">15</td>
+              <td class="dia" data-dia="16">16</td>
+              <td class="dia" data-dia="17">17</td>
+              <td class="dia" data-dia="18">18</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="19">19</td>
+              <td class="dia" data-dia="20">20</td>
+              <td class="dia" data-dia="21">21</td>
+              <td class="dia" data-dia="22">22</td>
+              <td class="dia" data-dia="23">23</td>
+              <td class="dia" data-dia="24">24</td>
+              <td class="dia" data-dia="25">25</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="26">26</td>
+              <td class="dia" data-dia="27">27</td>
+              <td class="dia" data-dia="28">28</td>
+              <td class="dia" data-dia="29">29</td>
+              <td class="dia" data-dia="30">30</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- MAIO -->
+        <table class="calendario-mensal" id="mes-maio" border="1">
+          <caption>Maio 2026</caption>
+          <thead>
+            <tr>
+              <th>Dom</th>
+              <th>Seg</th>
+              <th>Ter</th>
+              <th>Qua</th>
+              <th>Qui</th>
+              <th>Sex</th>
+              <th>Sáb</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="dia" data-dia="1">1</td>
+              <td class="dia" data-dia="2">2</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="3">3</td>
+              <td class="dia" data-dia="4">4</td>
+              <td class="dia" data-dia="5">5</td>
+              <td class="dia" data-dia="6">6</td>
+              <td class="dia" data-dia="7">7</td>
+              <td class="dia" data-dia="8">8</td>
+              <td class="dia" data-dia="9">9</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="10">10</td>
+              <td class="dia" data-dia="11">11</td>
+              <td class="dia" data-dia="12">12</td>
+              <td class="dia" data-dia="13">13</td>
+              <td class="dia" data-dia="14">14</td>
+              <td class="dia" data-dia="15">15</td>
+              <td class="dia" data-dia="16">16</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="17">17</td>
+              <td class="dia" data-dia="18">18</td>
+              <td class="dia" data-dia="19">19</td>
+              <td class="dia" data-dia="20">20</td>
+              <td class="dia" data-dia="21">21</td>
+              <td class="dia" data-dia="22">22</td>
+              <td class="dia" data-dia="23">23</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="24">24</td>
+              <td class="dia" data-dia="25">25</td>
+              <td class="dia" data-dia="26">26</td>
+              <td class="dia" data-dia="27">27</td>
+              <td class="dia" data-dia="28">28</td>
+              <td class="dia" data-dia="29">29</td>
+              <td class="dia" data-dia="30">30</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="31">31</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- JUNHO -->
+        <table class="calendario-mensal" id="mes-junho" border="1">
+          <caption>Junho 2026</caption>
+          <thead>
+            <tr>
+              <th>Dom</th>
+              <th>Seg</th>
+              <th>Ter</th>
+              <th>Qua</th>
+              <th>Qui</th>
+              <th>Sex</th>
+              <th>Sáb</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td class="dia" data-dia="1">1</td>
+              <td class="dia" data-dia="2">2</td>
+              <td class="dia" data-dia="3">3</td>
+              <td class="dia" data-dia="4">4</td>
+              <td class="dia" data-dia="5">5</td>
+              <td class="dia" data-dia="6">6</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="7">7</td>
+              <td class="dia" data-dia="8">8</td>
+              <td class="dia" data-dia="9">9</td>
+              <td class="dia" data-dia="10">10</td>
+              <td class="dia" data-dia="11">11</td>
+              <td class="dia" data-dia="12">12</td>
+              <td class="dia" data-dia="13">13</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="14">14</td>
+              <td class="dia" data-dia="15">15</td>
+              <td class="dia" data-dia="16">16</td>
+              <td class="dia" data-dia="17">17</td>
+              <td class="dia" data-dia="18">18</td>
+              <td class="dia" data-dia="19">19</td>
+              <td class="dia" data-dia="20">20</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="21">21</td>
+              <td class="dia" data-dia="22">22</td>
+              <td class="dia" data-dia="23">23</td>
+              <td class="dia" data-dia="24">24</td>
+              <td class="dia" data-dia="25">25</td>
+              <!-- Célula do Dia 26 com o evento estruturado -->
+              <td class="dia" data-dia="26">
+                <span>26</span>
+                <div class="evento">Segundo entregavel do TCC</div>
+              </td>
+              <td class="dia" data-dia="27">27</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="28">28</td>
+              <td class="dia" data-dia="29">29</td>
+              <td class="dia" data-dia="30">30</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <!-- JULHO -->
+        <table class="calendario-mensal" id="mes-julho" border="1">
+          <caption>Julho 2026</caption>
+          <thead>
+            <tr>
+              <th>Dom</th>
+              <th>Seg</th>
+              <th>Ter</th>
+              <th>Qua</th>
+              <th>Qui</th>
+              <th>Sex</th>
+              <th>Sáb</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="dia" data-dia="1">1</td>
+              <td class="dia" data-dia="2">2</td>
+              <td class="dia" data-dia="3">3</td>
+              <td class="dia" data-dia="4">4</td>
+              <td class="dia" data-dia="5">5</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="6">6</td>
+              <td class="dia" data-dia="7">7</td>
+              <td class="dia" data-dia="8">8</td>
+              <td class="dia" data-dia="9">9</td>
+              <td class="dia" data-dia="10">10</td>
+              <td class="dia" data-dia="11">11</td>
+              <td class="dia" data-dia="12">12</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="13">13</td>
+              <td class="dia" data-dia="14">14</td>
+              <td class="dia" data-dia="15">15</td>
+              <td class="dia" data-dia="16">16</td>
+              <td class="dia" data-dia="17">17</td>
+              <td class="dia" data-dia="18">18</td>
+              <td class="dia" data-dia="19">19</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="20">20</td>
+              <td class="dia" data-dia="21">21</td>
+              <td class="dia" data-dia="22">22</td>
+              <td class="dia" data-dia="23">23</td>
+              <td class="dia" data-dia="24">24</td>
+              <td class="dia" data-dia="25">25</td>
+              <td class="dia" data-dia="26">26</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="27">27</td>
+              <td class="dia" data-dia="28">28</td>
+              <td class="dia" data-dia="29">29</td>
+              <td class="dia" data-dia="30">30</td>
+              <td class="dia" data-dia="31">31</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- AGOSTO -->
+        <table class="calendario-mensal" id="mes-agosto" border="1">
+          <caption>Agosto 2026</caption>
+          <thead>
+            <tr>
+              <th>Dom</th>
+              <th>Seg</th>
+              <th>Ter</th>
+              <th>Qua</th>
+              <th>Qui</th>
+              <th>Sex</th>
+              <th>Sáb</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="dia" data-dia="1">1</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="2">2</td>
+              <td class="dia" data-dia="3">3</td>
+              <td class="dia" data-dia="4">4</td>
+              <td class="dia" data-dia="5">5</td>
+              <td class="dia" data-dia="6">6</td>
+              <td class="dia" data-dia="7">7</td>
+              <td class="dia" data-dia="8">8</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="9">9</td>
+              <td class="dia" data-dia="10">10</td>
+              <td class="dia" data-dia="11">11</td>
+              <td class="dia" data-dia="12">12</td>
+              <td class="dia" data-dia="13">13</td>
+              <td class="dia" data-dia="14">14</td>
+              <td class="dia" data-dia="15">15</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="16">16</td>
+              <td class="dia" data-dia="17">17</td>
+              <td class="dia" data-dia="18">18</td>
+              <td class="dia" data-dia="19">19</td>
+              <td class="dia" data-dia="20">20</td>
+              <td class="dia" data-dia="21">21</td>
+              <td class="dia" data-dia="22">22</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="23">23</td>
+              <td class="dia" data-dia="24">24</td>
+              <td class="dia" data-dia="25">25</td>
+              <td class="dia" data-dia="26">26</td>
+              <td class="dia" data-dia="27">27</td>
+              <td class="dia" data-dia="28">28</td>
+              <td class="dia" data-dia="29">29</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="30">30</td>
+              <td class="dia" data-dia="31">31</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- SETEMBRO -->
+        <table class="calendario-mensal" id="mes-setembro" border="1">
+          <caption>Setembro 2026</caption>
+          <thead>
+            <tr>
+              <th>Dom</th>
+              <th>Seg</th>
+              <th>Ter</th>
+              <th>Qua</th>
+              <th>Qui</th>
+              <th>Sex</th>
+              <th>Sáb</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="dia" data-dia="1">1</td>
+              <td class="dia" data-dia="2">2</td>
+              <td class="dia" data-dia="3">3</td>
+              <td class="dia" data-dia="4">4</td>
+              <td class="dia" data-dia="5">5</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="6">6</td>
+              <td class="dia" data-dia="7">7</td>
+              <td class="dia" data-dia="8">8</td>
+              <td class="dia" data-dia="9">9</td>
+              <td class="dia" data-dia="10">10</td>
+              <td class="dia" data-dia="11">11</td>
+              <td class="dia" data-dia="12">12</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="13">13</td>
+              <td class="dia" data-dia="14">14</td>
+              <td class="dia" data-dia="15">15</td>
+              <td class="dia" data-dia="16">16</td>
+              <td class="dia" data-dia="17">17</td>
+              <td class="dia" data-dia="18">18</td>
+              <td class="dia" data-dia="19">19</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="20">20</td>
+              <td class="dia" data-dia="21">21</td>
+              <td class="dia" data-dia="22">22</td>
+              <td class="dia" data-dia="23">23</td>
+              <td class="dia" data-dia="24">24</td>
+              <td class="dia" data-dia="25">25</td>
+              <td class="dia" data-dia="26">26</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="27">27</td>
+              <td class="dia" data-dia="28">28</td>
+              <td class="dia" data-dia="29">29</td>
+              <td class="dia" data-dia="30">30</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- OUTUBRO -->
+        <table class="calendario-mensal" id="mes-outubro" border="1">
+          <caption>Outubro 2026</caption>
+          <thead>
+            <tr>
+              <th>Dom</th>
+              <th>Seg</th>
+              <th>Ter</th>
+              <th>Qua</th>
+              <th>Qui</th>
+              <th>Sex</th>
+              <th>Sáb</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="dia" data-dia="1">1</td>
+              <td class="dia" data-dia="2">2</td>
+              <td class="dia" data-dia="3">3</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="4">4</td>
+              <td class="dia" data-dia="5">5</td>
+              <td class="dia" data-dia="6">6</td>
+              <td class="dia" data-dia="7">7</td>
+              <td class="dia" data-dia="8">8</td>
+              <td class="dia" data-dia="9">9</td>
+              <td class="dia" data-dia="10">10</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="11">11</td>
+              <td class="dia" data-dia="12">12</td>
+              <td class="dia" data-dia="13">13</td>
+              <td class="dia" data-dia="14">14</td>
+              <td class="dia" data-dia="15">15</td>
+              <td class="dia" data-dia="16">16</td>
+              <td class="dia" data-dia="17">17</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="18">18</td>
+              <td class="dia" data-dia="19">19</td>
+              <td class="dia" data-dia="20">20</td>
+              <td class="dia" data-dia="21">21</td>
+              <td class="dia" data-dia="22">22</td>
+              <td class="dia" data-dia="23">23</td>
+              <td class="dia" data-dia="24">24</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="25">25</td>
+              <td class="dia" data-dia="26">26</td>
+              <td class="dia" data-dia="27">27</td>
+              <td class="dia" data-dia="28">28</td>
+              <td class="dia" data-dia="29">29</td>
+              <td class="dia" data-dia="30">30</td>
+              <td class="dia" data-dia="31">31</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- NOVEMBRO -->
+        <table class="calendario-mensal" id="mes-novembro" border="1">
+          <caption>Novembro 2026</caption>
+          <thead>
+            <tr>
+              <th>Dom</th>
+              <th>Seg</th>
+              <th>Ter</th>
+              <th>Qua</th>
+              <th>Qui</th>
+              <th>Sex</th>
+              <th>Sáb</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="dia" data-dia="1">1</td>
+              <td class="dia" data-dia="2">2</td>
+              <td class="dia" data-dia="3">3</td>
+              <td class="dia" data-dia="4">4</td>
+              <td class="dia" data-dia="5">5</td>
+              <td class="dia" data-dia="6">6</td>
+              <td class="dia" data-dia="7">7</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="8">8</td>
+              <td class="dia" data-dia="9">9</td>
+              <td class="dia" data-dia="10">10</td>
+              <td class="dia" data-dia="11">11</td>
+              <td class="dia" data-dia="12">12</td>
+              <td class="dia" data-dia="13">13</td>
+              <td class="dia" data-dia="14">14</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="15">15</td>
+              <td class="dia" data-dia="16">16</td>
+              <td class="dia" data-dia="17">17</td>
+              <td class="dia" data-dia="18">18</td>
+              <td class="dia" data-dia="19">19</td>
+              <td class="dia" data-dia="20">20</td>
+              <td class="dia" data-dia="21">21</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="22">22</td>
+              <td class="dia" data-dia="23">23</td>
+              <td class="dia" data-dia="24">24</td>
+              <td class="dia" data-dia="25">25</td>
+              <td class="dia" data-dia="26">26</td>
+              <td class="dia" data-dia="27">27</td>
+              <td class="dia" data-dia="28">28</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="29">29</td>
+              <td class="dia" data-dia="30">30</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- DEZEMBRO -->
+        <table class="calendario-mensal" id="mes-dezembro" border="1">
+          <caption>Dezembro 2026</caption>
+          <thead>
+            <tr>
+              <th>Dom</th>
+              <th>Seg</th>
+              <th>Ter</th>
+              <th>Qua</th>
+              <th>Qui</th>
+              <th>Sex</th>
+              <th>Sáb</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="dia" data-dia="1">1</td>
+              <td class="dia" data-dia="2">2</td>
+              <td class="dia" data-dia="3">3</td>
+              <td class="dia" data-dia="4">4</td>
+              <td class="dia" data-dia="5">5</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="6">6</td>
+              <td class="dia" data-dia="7">7</td>
+              <td class="dia" data-dia="8">8</td>
+              <td class="dia" data-dia="9">9</td>
+              <td class="dia" data-dia="10">10</td>
+              <td class="dia" data-dia="11">11</td>
+              <td class="dia" data-dia="12">12</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="13">13</td>
+              <td class="dia" data-dia="14">14</td>
+              <td class="dia" data-dia="15">15</td>
+              <td class="dia" data-dia="16">16</td>
+              <td class="dia" data-dia="17">17</td>
+              <td class="dia" data-dia="18">18</td>
+              <td class="dia" data-dia="19">19</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="20">20</td>
+              <td class="dia" data-dia="21">21</td>
+              <td class="dia" data-dia="22">22</td>
+              <td class="dia" data-dia="23">23</td>
+              <td class="dia" data-dia="24">24</td>
+              <td class="dia" data-dia="25">25</td>
+              <td class="dia" data-dia="26">26</td>
+            </tr>
+            <tr>
+              <td class="dia" data-dia="27">27</td>
+              <td class="dia" data-dia="28">28</td>
+              <td class="dia" data-dia="29">29</td>
+              <td class="dia" data-dia="30">30</td>
+              <td class="dia" data-dia="31">31</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <style>
+          h3 {
+            color: #000000;
+            /* Preto puro devido ao fundo branco */
+            font-family: 'Times New Roman', Times, serif;
+            letter-spacing: normal;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+            transition: color 0.2s ease;
+          }
+
+          body.dark h3 {
+            color: #ffffff;
+            /* Fica branco automaticamente no modo escuro */
+          }
+
+          p {
+            color: #222222;
+            /* Cinza escuro para excelente contraste com branco */
+            font-family: Arial, Helvetica, sans-serif;
+            letter-spacing: normal;
+            text-align: justify;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 15px;
+            transition: color 0.2s ease;
+          }
+
+          body.dark p {
+            color: #dddddd;
+            /* Fica cinza claro no modo escuro */
+          }
+
+          #Agenda {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+          }
+
+          .calendario-mensal {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 0px;
+            background-color: white;
+            /* Mantido original fixo */
+          }
+
+          .calendario-mensal caption {
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 10px;
+            background-color: #228B22 !important;
+            /* Mantido original fixo */
+            color: white;
+            text-transform: uppercase;
+          }
+
+          .calendario-mensal th {
+            background-color: #f8faf8;
+            /* Mantido original fixo */
+            color: #333;
+            /* Mantido original fixo */
+            padding: 6px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 0.8rem;
+          }
+
+          .calendario-mensal td {
+            border: 1px solid #ddd;
+            width: 14.28%;
+            height: 38px;
+            vertical-align: middle;
+            padding: 4px;
+            color: #555;
+            /* Mantido original fixo */
+            font-size: 0.85rem;
+            transition: background 0.3s;
+          }
+
+          .calendario-mensal td:hover {
+            background-color: rgb(233, 239, 233);
+            /* Mantido original fixo */
+            cursor: pointer;
+          }
+
+          .calendario-mensal .evento {
+            background-color: rgb(211, 241, 209);
+            color: #228B22;
+            font-size: 0.7rem;
+            padding: 2px;
+            margin-top: 2px;
+            border-radius: 3px;
+            border-left: 2px solid rgb(13, 77, 0);
+            line-height: 1.1;
+            text-align: left;
+          }
+
+          .dia-atual {
+            background-color: var(--accent);
+            color: white;
+            font-weight: bold;
+            border-radius: 50%;
+          }
+
+          .fim-de-semana {
+            color: #888;
+          }
+
+          /* ==========================================================================
+   9. ESTILOS DE DUAS COLUNAS E DESIGN DAS SETAS
+   ========================================================================= */
+          .main-layout {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+            gap: 40px;
+          }
+
+          .left-content {
+            flex: 1;
+          }
+
+          .right-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+
+          .botoes-navegacao {
+            display: flex;
+            justify-content: space-between;
+            width: 290px;
+            margin-bottom: 15px;
+            gap: 20px;
+          }
+
+          .botoes-navegacao button {
+            flex: 1;
+            background: #196719;
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.2s;
+          }
+
+          .botoes-navegacao button:hover {
+            background: #134e13;
+          }
+
+          .quadrado-calendario {
+            width: 290px;
+            background: transparent;
+            border: none;
+            padding: 0px;
+          }
+
+          .calendario-mensal {
+            display: none;
+          }
+
+          .calendario-mensal.ativo {
+            display: table;
+          }
+
+          /* ==========================================================================
+   10. RESPONSIVIDADE (MEDIA QUERY MOBILE)
+   ========================================================================= */
+          .menu-toggle {
+            display: none;
+            font-size: 25px;
+            color: #fff;
+            cursor: pointer;
+          }
+        </style>
+        <script src="script1.js"></script>
+
+        </table> <!-- Aqui termina a tabela de Dezembro -->
+
+      </div> <!-- FECHA AQUI: .quadrado-calendario -->
+    </div> <!-- FECHA AQUI: .right-content -->
+  </div> <!-- FECHA AQUI O .main-layout QUE ESTAVA EM ABERTO E CAUSANDO O ERRO -->
+
+  <br>
+  <br>
+
+  <!-- ==================== AGORA SIM: CONTAINER DO RODAPÉ (TOTALMENTE FORA E ABAIXO) ==================== -->
+  <footer class="rodape-zay-shop">
+    <div class="rodape-grid">
+
+      <!-- COLUNA 1: Nome da Loja e Contatos -->
+      <div class="rodape-coluna">
+        <h2 class="rodape-logo-titulo">Solo em Equilíbrio</h2>
+        <ul class="rodape-lista-contatos">
+          <li><span class="icon-emoji">📍</span> 123 Consectetur at ligula 10660</li>
+          <li><span class="icon-emoji">📞</span> 010-020-0340</li>
+          <li><span class="icon-emoji">✉️</span> info@company.com</li>
+        </ul>
+      </div>
+
+      <!-- COLUNA 2: Categorias de Exemplo -->
+      <div class="rodape-coluna">
+        <h3 class="rodape-coluna-titulo">Products</h3>
+        <ul class="rodape-links-lista">
+          <li><a href="#">Luxury</a></li>
+          <li><a href="#">Sport Wear</a></li>
+          <li><a href="#">Men's Shoes</a></li>
+          <li><a href="#">Women's Shoes</a></li>
+          <li><a href="#">Dress Shoes</a></li>
+          <li><a href="#">Gym Accessories</a></li>
+          <li><a href="#">Sport Shoes</a></li>
+        </ul>
+      </div>
+
+      <!-- COLUNA 3: Links Internos de Navegação baseados no seu Menu -->
+      <div class="rodape-coluna">
+        <h3 class="rodape-coluna-titulo">Further Info</h3>
+        <ul class="rodape-links-lista">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="portifolio.html">Sobre nós</a></li>
+          <li><a href="https://figma.com">Kanban</a></li>
+          <li><a href="#">Equipe</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- FAIXA DE REDES SOCIAIS E COPYRIGHT -->
+    <div class="rodape-inferior-barra">
+      <div class="rodape-inferior-conteudo">
+
+        <div class="rodape-redes-sociais">
+          <a href="#" class="icone-rede-social" aria-label="Facebook">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+            </svg>
+          </a>
+          <a href="#" class="icone-rede-social" aria-label="Instagram">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+            </svg>
+          </a>
+          <a href="#" class="icone-rede-social" aria-label="Twitter">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+            </svg>
+          </a>
+          <a href="#" class="icone-rede-social" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+            </svg>
+          </a>
+        </div>
+
+        <div class="rodape-copyright">
+          <p>Copyright &copy; 2026 Solo em Equilíbrio | Designed by <a href="#">TemplateMo</a></p>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <style>
+    /* ==================== CONFIGURAÇÃO DO NOVO CSS DO RODAPÉ ==================== */
+    .rodape-zay-shop {
+      background-color: #212934 !important;
+      color: #cfd6e0 !important;
+      padding: 60px 8% 40px 8% !important;
+      font-family: sans-serif !important;
+      margin-top: 80px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      display: block !important;
+      /* Força a renderizar como bloco de linha inteira */
+      clear: both !important;
+      /* Quebra qualquer flutuação das colunas superiores */
+    }
+
+    .rodape-grid {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+      gap: 40px !important;
+      max-width: 1200px !important;
+      margin: 0 auto !important;
+    }
+
+    .rodape-logo-titulo {
+      color: #5cb82a !important;
+      font-size: 1.6rem !important;
+      font-weight: 700 !important;
+      margin: 0 0 20px 0 !important;
+      padding-bottom: 10px !important;
+      border-bottom: 1px solid #2d3846 !important;
+    }
+
+    .rodape-coluna-titulo {
+      color: #ffffff !important;
+      font-size: 1.3rem !important;
+      font-weight: 500 !important;
+      margin: 0 0 20px 0 !important;
+      padding-bottom: 10px !important;
+      border-bottom: 1px solid #2d3846 !important;
+    }
+
+    .rodape-lista-contatos,
+    .rodape-links-lista {
+      list-style: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    .rodape-lista-contatos li {
+      font-size: 0.95rem !important;
+      margin-bottom: 14px !important;
+      color: #cfd6e0 !important;
+      display: flex !important;
+      align-items: center !important;
+    }
+
+    .icon-emoji {
+      margin-right: 10px !important;
+      font-size: 1.1rem !important;
+    }
+
+    .rodape-links-lista li {
+      margin-bottom: 12px !important;
+    }
+
+    .rodape-links-lista li a {
+      color: #cfd6e0 !important;
+      text-decoration: none !important;
+      font-size: 0.95rem !important;
+      transition: color 0.2s ease !important;
+    }
+
+    .rodape-links-lista li a:hover {
+      color: #5cb82a !important;
+    }
+
+    .rodape-inferior-barra {
+      border-top: 1px solid #2d3846 !important;
+      margin-top: 40px !important;
+      padding-top: 30px !important;
+      width: 100% !important;
+    }
+
+    .rodape-inferior-conteudo {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      max-width: 1200px !important;
+      margin: 0 auto !important;
+      flex-wrap: wrap !important;
+      gap: 20px !important;
+    }
+
+    .rodape-redes-sociais {
+      display: flex !important;
+      gap: 12px !important;
+    }
+
+    .icone-rede-social {
+      width: 40px !important;
+      height: 40px !important;
+      border: 1px solid #414d5e !important;
+      border-radius: 50% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transition: background-color 0.2s, border-color 0.2s !important;
+    }
+
+    .icone-rede-social:hover {
+      background-color: #5cb82a !important;
+      border-color: #5cb82a !important;
+    }
+
+    .icone-rede-social svg {
+      width: 18px !important;
+      height: 18px !important;
+      fill: #cfd6e0 !important;
+    }
+
+    .icone-rede-social:hover svg {
+      fill: #ffffff !important;
+    }
+
+    .rodape-copyright p {
+      margin: 0 !important;
+      font-size: 0.9rem !important;
+      color: #cfd6e0 !important;
+    }
+
+    .rodape-copyright a {
+      color: #ffffff !important;
+      text-decoration: none !important;
+    }
+
+    .rodape-copyright a:hover {
+      color: #5cb82a !important;
+    }
+
+    @media (max-width: 768px) {
+      .rodape-zay-shop {
+        padding: 40px 5% !important;
+      }
+
+      .rodape-inferior-conteudo {
+        flex-direction: column !important;
+        text-align: center !important;
+      }
+    }
+  </style>
+</body>
+
+</html>

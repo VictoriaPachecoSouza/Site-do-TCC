@@ -1,0 +1,485 @@
+:root { 
+    --body-color: #fbfbfb; 
+    --nav-color: #2a7d2a; 
+    --side-nav: #0b500b; 
+    --text-color: #ffffff; 
+    --search-bar: #FFFFF0; 
+    --search-text: #054905; 
+    --font-family: #000000; 
+} 
+
+body.dark { 
+    --body-color: #1c1c1c; 
+    --nav-color: #1a681a; 
+    --side-nav: #111111; 
+    --text-color: #ffffff; 
+    --search-bar: #f7f1f1; 
+    --search-text: #7fd67f; 
+    --font-family: #f2f2f2; 
+
+    /* Cores dos cards */ 
+    --card-bg: #242424; 
+    --card-shadow: rgba(0, 0, 0, 0.4); 
+    --card-title: #ffffff; 
+    --card-desc: #dddddd; 
+} 
+ 
+.pagina-planta {  
+    width: 100%;  
+    max-width: 1500px;  
+    margin: 0 auto;  
+    padding: 35px 25px 40px;  
+    box-sizing: border-box;  
+} 
+ 
+.pagina-planta {  
+    width: 100%;  
+    max-width: 1500px;  
+    margin: 0 auto;  
+    padding: 35px 25px 40px;  
+    box-sizing: border-box;  
+} 
+
+
+/* =====================================================
+   GRID PRINCIPAL
+===================================================== */
+
+.layout-planta { 
+    display: grid; 
+
+    grid-template-columns: 
+        minmax(220px, 1fr) minmax(450px, 2fr) minmax(220px, 1fr); 
+
+    gap: 20px; 
+
+    align-items: stretch; 
+}
+
+
+/* =====================================================
+   COLUNA ESQUERDA
+===================================================== */
+
+.coluna-esquerda { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+    min-width: 0; 
+}
+
+
+/* FOTO SUPERIOR ESQUERDA */
+
+.foto-planta-superior { 
+    width: 100%; 
+    height: 325px; 
+    overflow: hidden; 
+    background: var(--side-nav); 
+} 
+
+.foto-planta-superior img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    display: block; 
+}
+
+
+/* =====================================================
+   NOME DA PLANTA
+===================================================== */
+
+.nome-planta { 
+    min-height: 265px; 
+
+    background: var(--nav-color); 
+
+    color: var(--text-color); 
+
+    display: flex; 
+    flex-direction: column; 
+
+    justify-content: center; 
+    align-items: center; 
+
+    text-align: center; 
+
+    padding: 25px 15px; 
+
+    box-sizing: border-box; 
+} 
+
+.nome-planta h2 { 
+    margin: 0; 
+
+    font-size: clamp(2rem, 3vw, 3.2rem); 
+
+    line-height: 1; 
+
+    font-weight: 800; 
+
+    text-transform: uppercase; 
+} 
+
+.nome-cientifico { 
+    margin-top: 20px; 
+
+    font-size: 1.25rem; 
+
+    line-height: 1.4; 
+
+    font-style: italic; 
+
+    color: var(--text-color); 
+} 
+
+.linha-planta { 
+    width: 78%; 
+
+    height: 9px; 
+
+    margin-top: 28px; 
+
+    background: var(--side-nav); 
+}
+
+
+/* =====================================================
+   FOTO INFERIOR ESQUERDA
+===================================================== */
+
+.foto-planta-inferior { 
+    width: 100%; 
+    height: 1000px; 
+
+    overflow: hidden; 
+
+    background: var(--side-nav); 
+} 
+
+.foto-planta-inferior img { 
+    width: 100%; 
+    height: 100%; 
+
+    object-fit: cover; 
+
+    display: block; 
+}
+
+
+/* =====================================================
+   COLUNA CENTRAL
+===================================================== */
+
+.coluna-central { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 18px; 
+    min-width: 0; 
+}
+
+
+/* FAIXA ESCURA SUPERIOR */
+
+.faixa-superior { 
+    width: 100%; 
+    height: 95px; 
+    background: var(--side-nav); 
+}
+
+
+/* =====================================================
+   ÁREA DO TÍTULO
+===================================================== */
+
+.titulo-area { 
+    display: block; 
+    width: 100%; 
+    margin-bottom: 10px; 
+} 
+
+.titulo-central { 
+    padding: 0; 
+    text-align: left; 
+} 
+
+.titulo-central h1 { 
+    margin: 0; 
+    color: var(--search-text); 
+    font-size: clamp(2.5rem, 4vw, 4.5rem); 
+    line-height: 0.94; 
+    font-weight: 900; 
+    text-transform: uppercase; 
+    letter-spacing: -2px; 
+}
+
+
+/* =====================================================
+   TEXTO PRINCIPAL
+===================================================== */
+
+.texto-principal { 
+    padding: 0 8px; 
+    color: var(--font-family); 
+    font-size: clamp(0.95rem, 1.2vw, 1.2rem); 
+    line-height: 1.55; 
+    text-align: center; 
+} 
+
+.texto-principal p { 
+    margin: 0 auto 25px; 
+    text-align: center; 
+} 
+
+.texto-principal p:last-child { 
+    margin-bottom: 0; 
+} 
+
+.texto-principal strong { 
+    color: var(--search-text); 
+}
+
+
+/* =====================================================
+   COLUNA DIREITA
+===================================================== */
+
+.coluna-direita { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+    min-width: 0; 
+}
+
+
+/* =====================================================
+   GLOSSÁRIO
+===================================================== */
+
+.glossario { 
+    background: var(--nav-color); 
+
+    color: var(--text-color); 
+
+    padding: 28px 28px; 
+
+    box-sizing: border-box; 
+
+    flex: 1; 
+} 
+
+.glossario-titulo { 
+    display: flex; 
+
+    align-items: center; 
+
+    gap: 15px; 
+
+    margin-bottom: 28px; 
+} 
+
+.glossario-icone { 
+    font-size: 2.2rem; 
+
+    line-height: 1; 
+} 
+
+.glossario h2 { 
+    margin: 0; 
+
+    font-size: clamp(1.5rem, 2vw, 2.1rem); 
+
+    font-weight: 800; 
+
+    text-transform: uppercase; 
+}
+
+
+/* TERMOS */
+
+.termo { 
+    padding-bottom: 18px; 
+
+    margin-bottom: 20px; 
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.45); 
+} 
+
+.termo:last-child { 
+    margin-bottom: 0; 
+
+    border-bottom: none; 
+} 
+
+.termo strong { 
+    display: block; 
+
+    margin-bottom: 6px; 
+
+    font-size: 1.05rem; 
+} 
+
+.termo p { 
+    margin: 0; 
+
+    font-size: 0.95rem; 
+
+    line-height: 1.5; 
+
+    color: var(--search-bar); 
+}
+
+
+/* =====================================================
+   FOTO INFERIOR DIREITA
+===================================================== */
+
+/* =====================================================
+   FOTO INFERIOR DIREITA
+===================================================== */
+
+.foto-direita {  
+    width: 100%;  
+    aspect-ratio: 1 / 1;
+    height: auto;
+    padding: 0;  
+    margin: 0;
+    box-sizing: border-box;  
+    overflow: hidden;
+    background: var(--side-nav);  
+}  
+
+.foto-direita img {  
+    width: 100%;  
+    height: 100%;  
+    object-fit: cover;  
+    display: block;  
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =====================================================
+   RESPONSIVIDADE
+===================================================== */
+
+@media (max-width: 1100px) { 
+
+    .layout-planta { 
+        grid-template-columns: 
+            190px minmax(350px, 1fr) 190px; 
+    } 
+
+    .titulo-area { 
+        grid-template-columns: 1fr 150px; 
+    } 
+
+    .bloco-titulo { 
+        height: 120px; 
+    } 
+
+    .foto-planta-superior { 
+        height: 250px; 
+    } 
+
+    .foto-planta-inferior { 
+        height: 250px; 
+    } 
+
+    .nome-planta { 
+        min-height: 230px; 
+    } 
+
+} 
+
+
+@media (max-width: 850px) { 
+
+    .layout-planta { 
+        grid-template-columns: 1fr 1fr; 
+    } 
+
+    .coluna-central { 
+        grid-column: 1 / -1; 
+        grid-row: 1; 
+    } 
+
+    .coluna-esquerda { 
+        grid-column: 1; 
+        grid-row: 2; 
+    } 
+
+    .coluna-direita { 
+        grid-column: 2; 
+        grid-row: 2; 
+    } 
+
+    .foto-planta-superior { 
+        height: 220px; 
+    } 
+
+    .foto-planta-inferior { 
+        height: 220px; 
+    } 
+
+    .foto-direita { 
+        height: 220px; 
+    } 
+
+} 
+
+
+@media (max-width: 600px) { 
+
+    .pagina-planta { 
+        padding: 20px 15px; 
+    } 
+
+    .layout-planta { 
+        display: flex; 
+
+        flex-direction: column; 
+    } 
+
+    .coluna-central { 
+        order: 1; 
+    } 
+
+    .coluna-esquerda { 
+        order: 2; 
+    } 
+
+    .coluna-direita { 
+        order: 3; 
+    } 
+
+    .titulo-area { 
+        grid-template-columns: 1fr; 
+    } 
+
+    .bloco-titulo { 
+        display: none; 
+    } 
+
+    .faixa-superior { 
+        height: 60px; 
+    } 
+
+    .titulo-central h1 { 
+        font-size: 2.5rem; 
+
+        letter-spacing: -1px; 
+    } 
+
+    .subtitulo { 
+        font-size: 1rem; 
+    } 
+
+    .foto-planta-superior, 
+    .foto-planta-inferior, 
+    .foto-direita { 
+        height: 250px; 
+    } 
+
+}

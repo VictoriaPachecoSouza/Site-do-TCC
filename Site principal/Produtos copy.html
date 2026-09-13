@@ -1,0 +1,3187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Solo em Equilíbrio</title>
+
+    <style>
+        /* =========================================================
+   CHATBOT - CORES DO TEMA
+========================================================= */
+
+        :root {
+            --chat-primary: #5cb82a;
+            --chat-primary-hover: #4da31f;
+
+            --chat-background: #ffffff;
+            --chat-messages: #f5f5f5;
+
+            --chat-text: #222222;
+            --chat-border: #dddddd;
+
+            --chat-bot: #e8f5e2;
+            --chat-user: #5cb82a;
+
+            --chat-input: #ffffff;
+        }
+
+
+        /* =========================================================
+   MODO ESCURO
+   O chatbot acompanha automaticamente o body.dark
+========================================================= */
+
+        body.dark {
+            --chat-background: #242424;
+            --chat-messages: #303030;
+
+            --chat-text: #ffffff;
+            --chat-border: #444444;
+
+            --chat-bot: #3b3b3b;
+            --chat-user: #5cb82a;
+
+            --chat-input: #333333;
+        }
+
+
+        /* =========================================================
+   CHATBOT - BOTÃO DO ROBÔ
+========================================================= */
+
+        .btn-abrir-chat-principal {
+            position: fixed;
+
+            bottom: 20px;
+            right: 20px;
+
+            background-color: var(--chat-primary);
+
+            border: none;
+
+            width: 70px;
+            height: 70px;
+
+            border-radius: 50%;
+
+            cursor: pointer;
+
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+            z-index: 9999;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transition:
+                transform 0.2s,
+                background-color 0.3s;
+
+            padding: 0;
+        }
+
+
+        .btn-abrir-chat-principal:hover {
+            background-color: var(--chat-primary-hover);
+            transform: scale(1.08);
+        }
+
+
+        .btn-abrir-chat-principal svg {
+            width: 58px;
+            height: 58px;
+        }
+
+
+        /* =========================================================
+   JANELA DO CHAT
+   TAMANHO FIXO: 300 X 380
+========================================================= */
+
+        .chatbot-principal {
+            position: fixed;
+
+            width: 300px;
+            height: 380px;
+
+            right: 20px;
+            bottom: 100px;
+
+            background: var(--chat-background);
+
+            color: var(--chat-text);
+
+            border: 1px solid var(--chat-border);
+
+            border-radius: 14px;
+
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+
+            overflow: hidden;
+
+            display: none;
+
+            flex-direction: column;
+
+            z-index: 10000;
+
+            transition:
+                background-color 0.3s,
+                color 0.3s,
+                border-color 0.3s;
+        }
+
+
+        /* =========================================================
+   CABEÇALHO
+========================================================= */
+
+        .chatbot-header {
+            height: 55px;
+
+            padding: 10px 12px;
+
+            background: var(--chat-primary);
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            flex-shrink: 0;
+        }
+
+
+        .chatbot-header strong {
+            display: block;
+
+            font-size: 16px;
+
+            font-family: Arial, sans-serif;
+        }
+
+
+        .chatbot-header small {
+            display: block;
+
+            margin-top: 2px;
+
+            font-size: 11px;
+
+            font-family: Arial, sans-serif;
+        }
+
+
+        /* =========================================================
+   BOTÃO FECHAR
+========================================================= */
+
+        .chatbot-fechar {
+            width: 30px;
+            height: 30px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background: rgba(0, 0, 0, 0.15);
+
+            color: white;
+
+            font-size: 22px;
+
+            line-height: 30px;
+
+            cursor: pointer;
+
+            padding: 0;
+
+            transition: background 0.2s;
+        }
+
+
+        .chatbot-fechar:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+
+        /* =========================================================
+   ÁREA DAS MENSAGENS
+========================================================= */
+
+        .chatbot-mensagens {
+            flex: 1;
+
+            min-height: 0;
+
+            padding: 12px;
+
+            overflow-y: auto;
+
+            background: var(--chat-messages);
+
+            color: var(--chat-text);
+
+            font-family: Arial, sans-serif;
+
+            transition:
+                background-color 0.3s,
+                color 0.3s;
+        }
+
+
+        /* =========================================================
+   BARRA DE ROLAGEM
+========================================================= */
+
+        .chatbot-mensagens::-webkit-scrollbar {
+            width: 5px;
+        }
+
+
+        .chatbot-mensagens::-webkit-scrollbar-track {
+            background: var(--chat-messages);
+        }
+
+
+        .chatbot-mensagens::-webkit-scrollbar-thumb {
+            background: var(--chat-primary);
+
+            border-radius: 10px;
+        }
+
+
+        /* =========================================================
+   MENSAGENS
+========================================================= */
+
+        .mensagem {
+            max-width: 85%;
+
+            padding: 8px 10px;
+
+            margin-bottom: 9px;
+
+            border-radius: 9px;
+
+            font-size: 12px;
+
+            line-height: 1.4;
+
+            color: var(--chat-text);
+
+            word-wrap: break-word;
+        }
+
+
+        .mensagem span {
+            display: block;
+
+            font-size: 10px;
+
+            font-weight: bold;
+
+            margin-bottom: 3px;
+        }
+
+
+        /* =========================================================
+   MENSAGEM DO BOT
+========================================================= */
+
+        .mensagem.bot {
+            background: var(--chat-bot);
+
+            border-bottom-left-radius: 3px;
+        }
+
+
+        .mensagem.bot span {
+            color: var(--chat-primary);
+        }
+
+
+        /* =========================================================
+   MENSAGEM DO USUÁRIO
+========================================================= */
+
+        .mensagem.usuario {
+            margin-left: auto;
+
+            background: var(--chat-user);
+
+            color: white;
+
+            border-bottom-right-radius: 3px;
+        }
+
+
+        .mensagem.usuario span {
+            color: white;
+        }
+
+
+        /* =========================================================
+   ÁREA DO INPUT
+========================================================= */
+
+        .chatbot-input-area {
+            height: 52px;
+
+            padding: 8px;
+
+            display: flex;
+
+            gap: 6px;
+
+            background: var(--chat-background);
+
+            border-top: 1px solid var(--chat-border);
+
+            flex-shrink: 0;
+
+            transition:
+                background-color 0.3s,
+                border-color 0.3s;
+        }
+
+
+        /* =========================================================
+   INPUT
+========================================================= */
+
+        .chatbot-input {
+            flex: 1;
+
+            min-width: 0;
+
+            height: 36px;
+
+            padding: 0 9px;
+
+            border-radius: 7px;
+
+            border: 1px solid var(--chat-border);
+
+            outline: none;
+
+            background: var(--chat-input);
+
+            color: var(--chat-text);
+
+            font-size: 12px;
+
+            font-family: Arial, sans-serif;
+
+            transition:
+                background-color 0.3s,
+                color 0.3s,
+                border-color 0.3s;
+        }
+
+
+        .chatbot-input::placeholder {
+            color: #999;
+        }
+
+
+        .chatbot-input:focus {
+            border-color: var(--chat-primary);
+        }
+
+
+        /* =========================================================
+   BOTÃO ENVIAR
+========================================================= */
+
+        .chatbot-enviar {
+            height: 36px;
+
+            padding: 0 10px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: var(--chat-primary);
+
+            color: white;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition:
+                background-color 0.2s,
+                transform 0.2s;
+        }
+
+
+        .chatbot-enviar:hover {
+            background: var(--chat-primary-hover);
+
+            transform: scale(1.03);
+        }
+
+
+        /* =========================================================
+   RESPONSIVO
+========================================================= */
+
+        @media (max-width: 450px) {
+
+            .chatbot-principal {
+                width: 300px;
+                height: 380px;
+
+                right: 10px;
+                bottom: 95px;
+
+                max-width: calc(100vw - 20px);
+            }
+
+
+            .btn-abrir-chat-principal {
+                right: 15px;
+                bottom: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-bar">
+            <!-- Ícone Menu Hambúrguer (SVG Nativo) -->
+            <svg class="sidebarOpen" viewBox="0 0 24 24">
+                <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" />
+            </svg>
+
+            <span class="logo"><a>Solo em Equilíbrio</a></span>
+
+            <div class="menu">
+                <div class="logo-toggle">
+                    <span class="logo"><a>Solo em Equilíbrio</a></span>
+                    <!-- Ícone Fechar X do Menu (SVG Nativo) -->
+                    <svg class="sidebarClose" viewBox="0 0 24 24">
+                        <path
+                            d="m16.192 6.344-4.192 4.192-4.192-4.192-1.414 1.414 4.192 4.192-4.192 4.192 1.414 1.414 4.192-4.192 4.192 4.192 1.414-1.414-4.192-4.192 4.192-4.192z" />
+                    </svg>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="Produtos.html">Produtos</a></li>
+                    <li><a href="#">Equipe</a></li>
+                    <li><a href="#">Informações</a></li>
+                    <li><a href="#">Dúvidas</a></li>
+                    <li><a href="#">Feedback</a></li>
+                </ul>
+            </div>
+
+            <div class="darkLight-searchBox">
+                <div class="dark-light">
+                    <!-- Ícone Lua (SVG Nativo) -->
+                    <svg class="moon" viewBox="0 0 24 24">
+                        <path
+                            d="M12 11.807A9.002 9.002 0 0 1 10.049 2a9.944 9.944 0 0 0-5.244 2.193C.961 7.472.71 13.568 4.212 17.07c3.5 3.5 9.597 3.25 12.877-.594A9.943 9.943 0 0 0 19.28 11.23a9.006 9.006 0 0 1-7.28.577z" />
+                    </svg>
+                    <!-- Ícone Sol (SVG Nativo) -->
+                    <svg class="sun" viewBox="0 0 24 24" fill="currentColor">
+                        <!-- Círculo Central -->
+                        <circle cx="12" cy="12" r="5" />
+
+                        <!-- Raios Verticais e Horizontais (Pontas arredondadas) -->
+                        <rect x="11" y="2" width="2" height="3" rx="1" />
+                        <rect x="11" y="19" width="2" height="3" rx="1" />
+                        <rect x="2" y="11" width="3" height="2" rx="1" />
+                        <rect x="19" y="11" width="3" height="2" rx="1" />
+
+                        <!-- Raios Diagonais (Rotacionados no centro do próprio raio) -->
+                        <rect x="5.29" y="5.29" width="2" height="3" rx="1" transform="rotate(-45 6.29 6.79)" />
+                        <rect x="16.71" y="15.71" width="2" height="3" rx="1" transform="rotate(-45 17.71 17.21)" />
+                        <rect x="16.71" y="5.29" width="2" height="3" rx="1" transform="rotate(45 17.71 6.79)" />
+                        <rect x="5.29" y="15.71" width="2" height="3" rx="1" transform="rotate(45 6.29 17.21)" />
+                    </svg>
+                </div>
+                <div class="searchBox">
+                    <div class="searchToggle">
+                        <!-- Ícone Cancelar X da Busca (SVG Nativo) -->
+                        <svg class="cancel" viewBox="0 0 24 24">
+                            <path
+                                d="m16.192 6.344-4.192 4.192-4.192-4.192-1.414 1.414 4.192 4.192-4.192 4.192 1.414 1.414 4.192-4.192 4.192 4.192 1.414-1.414-4.192-4.192 4.192-4.192z" />
+                        </svg>
+                        <!-- Ícone Lupa Principal (SVG Nativo) -->
+                        <svg class="search" viewBox="0 0 24 24">
+                            <path
+                                d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z" />
+                        </svg>
+                    </div>
+                    <div class="search-field">
+                        <input type="text" id="buscaPlantas" placeholder="Buscar plantas..." autocomplete="off"
+                            aria-label="Buscar plantas no site">
+                        <!-- Ícone Lupa Interna do Input (SVG Nativo) -->
+                        <svg class="input-search-icon" viewBox="0 0 24 24">
+                            <path
+                                d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <button class="btn-abrir-chat-principal" onclick="alternarChat()" aria-label="Abrir Chatbot">
+
+
+        <svg viewBox="0 0 512 512">
+            <!-- Corpo e Pescoço -->
+            <path d="M256 310v35h20v-35z" fill="#e1f5fe" />
+            <path d="M236 310v35h20v-35z" fill="#b3e5fc" />
+            <path d="M256 328c-71.8 0-130 58.2-130 130v54h130V328z" fill="#e1f5fe" />
+            <path d="M256 328v184h130v-54c0-71.8-58.2-130-130-130z" fill="#90caf9" />
+            <!-- Cabeça Externa -->
+            <path d="M256 81c-82.3 0-142 55.4-142 110.5s59.7 110.5 142 110.5z" fill="#e1f5fe" />
+            <path d="M256 81v221c82.3 0 142-55.4 142-110.5S338.3 81 256 81z" fill="#b3e5fc" />
+            <!-- Visor Escuro -->
+            <path d="M256 125c-54.1 0-98 29.5-98 66s43.9 66 98 66z" fill="#1a0066" />
+            <path d="M256 125v132c54.1 0 98-29.5 98-66s-43.9-66-98-66z" fill="#12004d" />
+            <!-- Olhos Verdes -->
+            <path d="M210 143h16v40h-16z" fill="#5cb82a" />
+            <path d="M278 143h16v40h-16z" fill="#4da31f" />
+            <!-- Sorriso Verde -->
+            <path d="M214 209c0 10.5 18.8 19 42 19v-19z" fill="#5cb82a" />
+            <path d="M256 209v19c23.2 0 42-8.5 42-19z" fill="#4da31f" />
+            <!-- Orelhas/Fones Laterais -->
+            <path d="M116 172c-15.5 0-28 11.2-28 25s12.5 25 28 25z" fill="#311b92" />
+            <path d="M116 172v50c6.6 0 12-11.2 12-25s-5.4-25-12-25z" fill="#90caf9" />
+            <path d="M396 172v50c15.5 0 28-11.2 28-25s-12.5-25-28-25z" fill="#1a0066" />
+            <path d="M396 172c-6.6 0-12 11.2-12 25s5.4 25 12 25z" fill="#64b5f6" />
+            <!-- Microfone do Headset -->
+            <path d="M394 235c0 23.2-18.8 42-42 42h-40v-14h40c15.5 0 28-12.5 28-28z" fill="#1a0066" />
+            <path d="M312 263c-12.2 0-22 9.8-22 22s9.8 22 22 22 22-9.8 22-22-9.8-22-22-22z" fill="#1a0066" />
+        </svg>
+
+    </button>
+
+
+
+    <div class="chatbot-principal" id="chatbotPrincipal">
+
+        <!-- Cabeçalho -->
+
+        <div class="chatbot-header">
+
+            <div>
+
+                <strong>chatArais</strong>
+
+                <small>Assistente virtual 🌱</small>
+
+            </div>
+
+
+            <button class="chatbot-fechar" onclick="fecharChat()" aria-label="Fechar chatbot">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <!-- Mensagens -->
+
+        <div class="chatbot-mensagens" id="chatbotMensagens">
+
+            <div class="mensagem bot">
+
+                <span>Bot</span>
+
+                Olá! 👋 Como posso ajudar você?
+
+            </div>
+
+        </div>
+
+
+        <!-- Campo de mensagem -->
+
+        <div class="chatbot-input-area">
+
+            <input type="text" id="chatbotInput" class="chatbot-input" placeholder="Digite sua mensagem..."
+                autocomplete="off">
+
+            <button class="chatbot-enviar" onclick="enviarMensagem()">
+
+                Enviar
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+     JAVASCRIPT DO CHATBOT
+========================================================= -->
+
+    <script>
+
+        /* =====================================================
+           ABRIR / FECHAR CHAT
+        ===================================================== */
+
+        function alternarChat() {
+
+            const chat =
+                document.getElementById("chatbotPrincipal");
+
+            const input =
+                document.getElementById("chatbotInput");
+
+            if (!chat) return;
+
+
+            if (chat.style.display === "flex") {
+
+                chat.style.display = "none";
+
+            } else {
+
+                chat.style.display = "flex";
+
+                if (input) {
+                    input.focus();
+                }
+
+            }
+
+        }
+
+
+        /* =====================================================
+           FECHAR CHAT
+        ===================================================== */
+
+        function fecharChat() {
+
+            const chat =
+                document.getElementById("chatbotPrincipal");
+
+            if (chat) {
+
+                chat.style.display = "none";
+
+            }
+
+        }
+
+
+        /* =====================================================
+           FECHAR AO CLICAR FORA
+        ===================================================== */
+
+        document.addEventListener("click", function (event) {
+
+            const chat =
+                document.getElementById("chatbotPrincipal");
+
+            const botaoRobo =
+                document.querySelector(".btn-abrir-chat-principal");
+
+            if (!chat || !botaoRobo) {
+                return;
+            }
+
+
+            if (chat.style.display !== "flex") {
+                return;
+            }
+
+
+            const clicouDentroDoChat =
+                chat.contains(event.target);
+
+            const clicouNoRobo =
+                botaoRobo.contains(event.target);
+
+
+            if (
+                !clicouDentroDoChat &&
+                !clicouNoRobo
+            ) {
+
+                fecharChat();
+
+            }
+
+        });
+
+
+        /* =====================================================
+           ADICIONAR MENSAGEM
+        ===================================================== */
+
+        function adicionarMensagem(texto, tipo) {
+
+            const mensagens =
+                document.getElementById("chatbotMensagens");
+
+            if (!mensagens) return;
+
+
+            const mensagem =
+                document.createElement("div");
+
+            mensagem.className =
+                "mensagem " + tipo;
+
+
+            const nome =
+                document.createElement("span");
+
+
+            if (tipo === "bot") {
+
+                nome.textContent = "Bot";
+
+            } else {
+
+                nome.textContent = "Você";
+
+            }
+
+
+            mensagem.appendChild(nome);
+
+
+            const conteudo =
+                document.createTextNode(texto);
+
+            mensagem.appendChild(conteudo);
+
+
+            mensagens.appendChild(mensagem);
+
+
+            mensagens.scrollTop =
+                mensagens.scrollHeight;
+
+        }
+
+
+        /* =====================================================
+           RESPOSTAS DO CHATBOT
+        ===================================================== */
+
+        function respostaBot(texto) {
+
+            const mensagem =
+                texto.toLowerCase().trim();
+
+
+            /* SAUDAÇÕES */
+
+            if (
+                mensagem.includes("oi") ||
+                mensagem.includes("olá") ||
+                mensagem.includes("ola")
+            ) {
+
+                return "Olá! 👋 Como posso ajudar você?";
+
+            }
+
+
+            /* BOM DIA */
+
+            if (
+                mensagem.includes("bom dia")
+            ) {
+
+                return "Bom dia! 🌱 Como posso ajudar?";
+
+            }
+
+
+            /* BOA TARDE */
+
+            if (
+                mensagem.includes("boa tarde")
+            ) {
+
+                return "Boa tarde! 🌱 Como posso ajudar?";
+
+            }
+
+
+            /* BOA NOITE */
+
+            if (
+                mensagem.includes("boa noite")
+            ) {
+
+                return "Boa noite! 🌙 Como posso ajudar?";
+
+            }
+
+
+            /* AJUDA */
+
+            if (
+                mensagem.includes("ajuda") ||
+                mensagem.includes("suporte")
+            ) {
+
+                return "Claro! Estou aqui para ajudar com informações sobre o Solo em Equilíbrio. 🌱";
+
+            }
+
+
+            /* SOLO */
+
+            if (
+                mensagem.includes("solo")
+            ) {
+
+                return "O solo é muito importante para o equilíbrio do meio ambiente, para as plantas e para a produção de alimentos. 🌱";
+
+            }
+
+
+            /* PLANTAS */
+
+            if (
+                mensagem.includes("planta") ||
+                mensagem.includes("plantas")
+            ) {
+
+                return "As plantas dependem de um solo saudável para crescer. Cuidar do solo também ajuda a preservar o meio ambiente. 🌿";
+
+            }
+
+
+            /* SUSTENTABILIDADE */
+
+            if (
+                mensagem.includes("sustentabilidade") ||
+                mensagem.includes("sustentável")
+            ) {
+
+                return "A sustentabilidade busca utilizar os recursos naturais de forma responsável, pensando também nas futuras gerações. 🌎";
+
+            }
+
+
+            /* MEIO AMBIENTE */
+
+            if (
+                mensagem.includes("meio ambiente") ||
+                mensagem.includes("ambiente")
+            ) {
+
+                return "Cuidar do meio ambiente envolve preservar o solo, a água, as plantas e os animais. 🌎🌱";
+
+            }
+
+
+            /* OBRIGADO */
+
+            if (
+                mensagem.includes("obrigado") ||
+                mensagem.includes("obrigada")
+            ) {
+
+                return "De nada! 😊 Estou sempre aqui para ajudar.";
+
+            }
+
+
+            /* TCHAU */
+
+            if (
+                mensagem.includes("tchau") ||
+                mensagem.includes("adeus")
+            ) {
+
+                return "Tchau! 👋 Até a próxima!";
+
+            }
+
+
+            /* RESPOSTA PADRÃO */
+
+            return "Ainda estou aprendendo! 🤖 Tente perguntar sobre solo, plantas, sustentabilidade ou meio ambiente.";
+
+        }
+
+
+        /* =====================================================
+           ENVIAR MENSAGEM
+        ===================================================== */
+
+        function enviarMensagem() {
+
+            const input =
+                document.getElementById("chatbotInput");
+
+            if (!input) return;
+
+
+            const texto =
+                input.value.trim();
+
+
+            if (texto === "") {
+                return;
+            }
+
+
+            /* Mostra mensagem do usuário */
+
+            adicionarMensagem(
+                texto,
+                "usuario"
+            );
+
+
+            /* Limpa o campo */
+
+            input.value = "";
+
+
+            /* Resposta do bot */
+
+            setTimeout(function () {
+
+                const resposta =
+                    respostaBot(texto);
+
+
+                adicionarMensagem(
+                    resposta,
+                    "bot"
+                );
+
+            }, 500);
+
+        }
+
+
+        /* =====================================================
+           ENTER PARA ENVIAR
+        ===================================================== */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const input =
+                    document.getElementById("chatbotInput");
+
+                if (!input) return;
+
+
+                input.addEventListener(
+                    "keydown",
+                    function (event) {
+
+                        if (event.key === "Enter") {
+
+                            event.preventDefault();
+
+                            enviarMensagem();
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+    </script>
+
+    <br>
+    <br>
+
+    <!-- ==================== NOVO COMPONENTE: CARD FIXO NO MEIO COM SELEÇÃO POR SETAS ==================== -->
+    <div class="container-centralizador-isolado">
+
+        <!-- Seta Esquerda -->
+        <button class="seta-controle-fixa seta-esq" onclick="mudarConteudoCard(-1)" aria-label="Anterior">
+            <svg viewBox="0 0 24 24">
+                <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" />
+            </svg>
+        </button>
+
+        <!-- O CARD ÚNICO QUE FICA FIXO NO MEIO (AGORA ARREDONDADO) -->
+        <div class="meu-card-central-fixo">
+            <a href="Card-central 1.html" id="linkCardFixo" class="link-card-isolado">
+                <div class="wrapper-foto-isolada">
+                    <span id="nomeFotoFixo" class="label-foto-isolada">Muda de Ipê Rosa</span>
+                    <img id="imgCardFixo" src="muda-ipe.webp" alt="Imagem da planta">
+
+                    <div class="overlay-central">
+                        <div class="conteudo-banner-central"> <br>
+                            <h3 id="tituloCardFixo">Ipê-rosa</h3>
+                            <div class="estrelas-isoladas" id="estrelasCardFixo">★★★★★</div>
+                            <button class="botao-banner-central" type="button">Ver planta</button>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+
+            <style>
+                /* APENAS OS 3 CARDS CENTRAIS */
+                .seta-controle-fixa {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 44px;
+                    height: 44px;
+                    border: none;
+                    border-radius: 50%;
+                    background: #5cb82a;
+                    color: #ffffff;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    z-index: 10;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, .18);
+                    transition: background .2s ease, transform .2s ease;
+                }
+
+                .seta-controle-fixa:hover {
+                    background: #4da31f;
+                    transform: translateY(-50%) scale(1.06);
+                }
+
+                .seta-controle-fixa svg {
+                    width: 25px;
+                    height: 25px;
+                    fill: currentColor;
+                }
+
+                .container-centralizador-isolado {
+                    position: relative;
+                    width: 100%;
+                    min-height: 430px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 45px auto 20px;
+                    background: transparent;
+                    box-sizing: border-box;
+                }
+
+                .meu-card-central-fixo {
+                    width: min(850px, calc(100% - 150px));
+                    height: 360px;
+                    border-radius: 18px;
+                    overflow: hidden;
+                    background: #ffffff;
+                    border: 1px solid #e0e0e0;
+                    box-shadow: 0 8px 25px rgba(0, 0, 0, .12);
+                    z-index: 2;
+                    transition: transform .25s ease, box-shadow .25s ease;
+                }
+
+                .meu-card-central-fixo:hover {
+                    transform: translateY(-3px);
+                    box-shadow: 0 12px 32px rgba(0, 0, 0, .16);
+                }
+
+                .link-card-isolado {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    color: #212529;
+                    text-decoration: none;
+                }
+
+                .wrapper-foto-isolada {
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+                    overflow: hidden;
+                    background-color: #f5f5f5;
+                }
+
+                .wrapper-foto-isolada img {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+                .label-foto-isolada {
+                    position: absolute;
+                    top: 12px;
+                    left: 14px;
+                    z-index: 4;
+                    padding: 4px 8px;
+                    border-radius: 5px;
+                    background: rgba(0, 0, 0, .55);
+                    color: #fff;
+                    font-size: 10px;
+                }
+
+                .overlay-central {
+                    position: absolute;
+                    inset: 0;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    padding: 34px 38px 28px;
+                    box-sizing: border-box;
+                    background: linear-gradient(90deg, rgba(0, 0, 0, .68) 0%, rgba(0, 0, 0, .42) 38%, rgba(0, 0, 0, .08) 72%, rgba(0, 0, 0, 0) 100%);
+                }
+
+                .conteudo-banner-central {
+                    width: min(390px, 65%);
+                    color: #fff;
+                }
+
+                .conteudo-banner-central .estrelas-isoladas {
+                    margin-bottom: 9px;
+                    font-size: 14px;
+                }
+
+                .conteudo-banner-central h3 {
+                    margin: 0 0 9px;
+                    color: #fff;
+                    font-size: clamp(26px, 3vw, 42px);
+                    line-height: 1.05;
+                    font-weight: 600;
+                }
+
+                .conteudo-banner-central p {
+                    margin: 0 0 18px;
+                    color: rgba(255, 255, 255, .9);
+                    font-size: 14px;
+                    line-height: 1.45;
+                }
+
+                .botao-banner-central {
+                    border: 0;
+                    border-radius: 20px;
+                    padding: 9px 18px;
+                    background: #5cb82a;
+                    color: #fff;
+                    font: inherit;
+                    font-size: 12px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    box-shadow: 0 3px 10px rgba(0, 0, 0, .2);
+                }
+
+                .botao-banner-central:hover {
+                    background: #4da31f;
+                }
+
+                .preco-banner-central {
+                    align-self: flex-end;
+                    color: #fff;
+                    font-size: 22px;
+                    font-weight: 700;
+                    text-shadow: 0 2px 5px rgba(0, 0, 0, .4);
+                }
+
+                .dark .meu-card-central-fixo {
+                    background: #1f1f1f !important;
+                    border-color: #333 !important;
+                }
+
+                @media (min-width: 901px) {
+
+                    /* Setas mais afastadas das laterais do card */
+                    .seta-esq {
+                        left: max(20px, calc(50% - 500px));
+                    }
+
+                    .seta-dir {
+                        right: max(20px, calc(50% - 500px));
+                    }
+                }
+
+                @media (max-width: 900px) {
+
+                    /* Mantém um espaço confortável entre as setas e o card */
+                    .meu-card-central-fixo {
+                        width: calc(100% - 145px);
+                    }
+
+                    .seta-esq {
+                        left: 20px;
+                    }
+
+                    .seta-dir {
+                        right: 20px;
+                    }
+                }
+
+                @media (max-width: 700px) {
+                    .container-centralizador-isolado {
+                        min-height: 235px;
+                        margin: 30px auto 12px;
+                        padding: 0 42px;
+                    }
+
+                    .meu-card-central-fixo {
+                        width: 100%;
+                        height: 205px;
+                        border-radius: 14px;
+                    }
+
+                    .overlay-central {
+                        padding: 20px 20px 17px;
+                        background: linear-gradient(90deg, rgba(0, 0, 0, .7) 0%, rgba(0, 0, 0, .38) 48%, rgba(0, 0, 0, .04) 100%);
+                    }
+
+                    .conteudo-banner-central {
+                        width: 62%;
+                    }
+
+                    .conteudo-banner-central .estrelas-isoladas {
+                        font-size: 10px;
+                        margin-bottom: 4px;
+                    }
+
+                    .conteudo-banner-central h3 {
+                        font-size: 20px;
+                        margin-bottom: 5px;
+                    }
+
+                    .conteudo-banner-central p {
+                        font-size: 9px;
+                        line-height: 1.3;
+                        margin-bottom: 8px;
+                    }
+
+                    .botao-banner-central {
+                        padding: 6px 12px;
+                        font-size: 9px;
+                    }
+
+                    .preco-banner-central {
+                        font-size: 15px;
+                    }
+
+                    .label-foto-isolada {
+                        top: 7px;
+                        left: 8px;
+                        font-size: 8px;
+                    }
+
+                    .seta-controle-fixa {
+                        width: 32px;
+                        height: 32px;
+                    }
+
+                    .seta-controle-fixa svg {
+                        width: 19px;
+                        height: 19px;
+                    }
+
+                    .seta-esq {
+                        left: 7px;
+                    }
+
+                    .seta-dir {
+                        right: 7px;
+                    }
+                }
+
+                @media (max-width: 360px) {
+                    .container-centralizador-isolado {
+                        padding: 0 38px;
+                    }
+
+                    .meu-card-central-fixo {
+                        height: 190px;
+                    }
+
+                    .conteudo-banner-central {
+                        width: 68%;
+                    }
+
+                    .conteudo-banner-central h3 {
+                        font-size: 18px;
+                    }
+
+                    .conteudo-banner-central p {
+                        font-size: 8px;
+                    }
+                }
+            </style>
+
+            <!-- ==================== JAVASCRIPT DE BANCO DE DADOS ISOLADO ==================== -->
+            <script>
+                // Banco de dados isolado contendo as informações que vão rodar dentro do card fixo
+                const dadosDosCards = [
+                    {
+                        link: "Card-central 1.html",
+                        fotoLabel: "muda-ipe.webp",
+                        imagem: "muda-ipe.webp",
+                        estrelas: "★★★★★",
+                        titulo: "Ipê-rosa",
+                        descricao: "Árvore ornamental conhecida por suas flores rosas.",
+                        reviews: "Reviews (48)"
+                    },
+                    {
+                        link: "Card-central 2.html",
+                        fotoLabel: "nome-da-foto-2.jpg",
+                        imagem: "sua-imagem2.jpg",
+                        estrelas: "★★★☆☆",
+                        preco: "$480.00",
+                        titulo: "Título do Card 2",
+                        descricao: "Descrição rápida do conteúdo aqui.",
+                        reviews: "Reviews (48)"
+                    },
+                    {
+                        link: "Card-central 3.html",
+                        fotoLabel: "nome-da-foto-3.jpg",
+                        imagem: "sua-imagem3.jpg",
+                        estrelas: "★★★★★",
+                        preco: "$360.00",
+                        titulo: "Título do Card 3",
+                        descricao: "Descrição rápida do conteúdo aqui.",
+                        reviews: "Reviews (74)"
+                    }
+                ];
+
+                let posicaoAtual = 0;
+
+                function mudarConteudoCard(direcao) {
+                    posicaoAtual += direcao;
+
+                    // Sistema de loop infinito pelos dados
+                    if (posicaoAtual < 0) {
+                        posicaoAtual = dadosDosCards.length - 1;
+                    } else if (posicaoAtual >= dadosDosCards.length) {
+                        posicaoAtual = 0;
+                    }
+
+                    const cardDados = dadosDosCards[posicaoAtual];
+
+                    // Altera apenas o conteúdo do documento interno sem quebrar o layout
+                    document.getElementById('linkCardFixo').setAttribute('href', cardDados.link);
+                    document.getElementById('nomeFotoFixo').textContent = cardDados.fotoLabel;
+                    document.getElementById('imgCardFixo').setAttribute('src', cardDados.imagem);
+                    document.getElementById('estrelasCardFixo').textContent = cardDados.estrelas;
+                    document.getElementById('precoCardFixo').textContent = cardDados.preco;
+                    document.getElementById('tituloCardFixo').textContent = cardDados.titulo;
+                    document.getElementById('descricaoCardFixo').textContent = cardDados.descricao;
+                    const reviews = document.getElementById('reviewsCardFixo');
+                    if (reviews) reviews.textContent = cardDados.reviews;
+                }
+            </script>
+
+        </div>
+        <button class="seta-controle-fixa seta-dir" onclick="mudarConteudoCard(1)" aria-label="Próximo">
+            <svg viewBox="0 0 24 24">
+                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
+            </svg>
+        </button>
+    </div> <!-- Seta Direita -->
+
+    </div>
+
+    <br>
+    <br>
+    <br>
+
+
+
+    <!-- ==================== 5 BOTÕES DE CATEGORIA ABAIXO DO CARD CENTRAL ==================== -->
+    <div class="filtros-card-central" aria-label="Categorias de plantas">
+
+        <button class="botao-filtro-central ativo" type="button">
+            <span class="icone-filtro-central">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                        d="M12 21c-4.8-2.1-7.5-6.2-7.5-10.8C4.5 6.8 7.2 3.3 12 3c4.8.3 7.5 3.8 7.5 7.2C19.5 14.8 16.8 18.9 12 21z" />
+                    <path d="M12 20V7" />
+                    <path d="M12 11c-2.3-1.7-4.1-2-5.7-1.8" />
+                    <path d="M12 14c2.1-1.5 3.8-1.8 5.3-1.6" />
+                </svg>
+            </span>
+            <span>All Plants</span>
+        </button>
+
+        <button class="botao-filtro-central" type="button">
+            <span class="icone-filtro-central">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7 20V10" />
+                    <path d="M17 20V10" />
+                    <path d="M5 10h14" />
+                    <path d="M8 10V6h8v4" />
+                    <path d="M10 6V3h4v3" />
+                    <path d="M4 20h16" />
+                </svg>
+            </span>
+            <span>Indoor</span>
+        </button>
+
+        <button class="botao-filtro-central" type="button">
+            <span class="icone-filtro-central">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                        d="M12 21c-4.8-2.1-7.5-6.2-7.5-10.8C4.5 6.8 7.2 3.3 12 3c4.8.3 7.5 3.8 7.5 7.2C19.5 14.8 16.8 18.9 12 21z" />
+                    <path d="M12 20V7" />
+                    <path d="M12 12c2-2.2 3.9-2.8 5.8-2.7" />
+                </svg>
+            </span>
+            <span>Outdoor</span>
+        </button>
+
+        <button class="botao-filtro-central" type="button">
+            <span class="icone-filtro-central">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="3.2" />
+                    <path d="M12 2v3" />
+                    <path d="M12 19v3" />
+                    <path d="M2 12h3" />
+                    <path d="M19 12h3" />
+                    <path d="m4.9 4.9 2.1 2.1" />
+                    <path d="m17 17 2.1 2.1" />
+                    <path d="m19.1 4.9-2.1 2.1" />
+                    <path d="m7 17-2.1 2.1" />
+                </svg>
+            </span>
+            <span>Low Light</span>
+        </button>
+
+        <button class="botao-filtro-central" type="button">
+            <span class="icone-filtro-central">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                        d="M5.5 12.5c0-4.3 2.7-7 6.5-7s6.5 2.7 6.5 7c0 3.8-2.2 6.5-6 6.5h-1.2c-2.5 0-5.8-1.7-5.8-6.5z" />
+                    <path d="M8 15c1.7-.2 3.1.3 4.3 1.6" />
+                    <path d="M16.5 11.5c1.1.2 2 .8 2.6 1.7" />
+                    <circle cx="9.5" cy="11" r=".8" />
+                    <circle cx="14.8" cy="10.8" r=".8" />
+                </svg>
+            </span>
+            <span>Pet Friendly</span>
+        </button>
+
+    </div>
+
+    <style>
+        /* ==================== 5 BOTÕES ABAIXO DO CARD CENTRAL ==================== */
+
+        .filtros-card-central {
+            width: min(900px, calc(100% - 40px));
+            max-width: 900px;
+            margin: -15px auto 45px auto;
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            justify-content: center;
+            align-items: stretch;
+            gap: 14px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .botao-filtro-central {
+            min-width: 0;
+            min-height: 92px;
+            width: 100%;
+            padding: 12px 8px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background: #ffffff;
+            color: #333333;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 500;
+            transition: transform 0.2s ease,
+                background-color 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .icone-filtro-central {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5cb82a;
+        }
+
+        .icone-filtro-central svg {
+            width: 25px;
+            height: 25px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.7;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .botao-filtro-central:hover {
+            transform: translateY(-3px);
+            border-color: #5cb82a;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .botao-filtro-central.ativo {
+            background: #5cb82a;
+            border-color: #5cb82a;
+            color: #ffffff;
+        }
+
+        .botao-filtro-central.ativo .icone-filtro-central {
+            color: #ffffff;
+        }
+
+        .botao-filtro-central.ativo:hover {
+            background: #4da31f;
+            border-color: #4da31f;
+        }
+
+        /* ==================== BOTÕES NO DARK MODE ==================== */
+
+        .dark .botao-filtro-central {
+            background: #1f1f1f;
+            border-color: #333333;
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .dark .botao-filtro-central .icone-filtro-central {
+            color: #5cb82a;
+        }
+
+        .dark .botao-filtro-central.ativo {
+            background: #5cb82a;
+            border-color: #5cb82a;
+            color: #ffffff;
+        }
+
+        .dark .botao-filtro-central.ativo .icone-filtro-central {
+            color: #ffffff;
+        }
+
+        /* ==================== CELULAR: 5 BOTÕES NA MESMA LINHA ==================== */
+        @media (max-width: 700px) {
+            .filtros-card-central {
+                width: calc(100% - 16px);
+                max-width: none;
+                grid-template-columns: repeat(5, minmax(0, 1fr));
+                gap: 4px;
+                padding: 0;
+                margin-top: -10px;
+            }
+
+            .botao-filtro-central {
+                min-height: 72px;
+                padding: 7px 2px;
+                gap: 4px;
+                border-radius: 8px;
+                font-size: 9px;
+                line-height: 1.05;
+                white-space: normal;
+            }
+
+            .icone-filtro-central {
+                width: 25px;
+                height: 25px;
+                flex-shrink: 0;
+            }
+
+            .icone-filtro-central svg {
+                width: 21px;
+                height: 21px;
+            }
+        }
+
+        /* Celulares muito estreitos */
+        @media (max-width: 360px) {
+            .filtros-card-central {
+                width: calc(100% - 10px);
+                gap: 3px;
+            }
+
+            .botao-filtro-central {
+                min-height: 68px;
+                padding: 6px 1px;
+                font-size: 8px;
+                border-radius: 7px;
+            }
+
+            .icone-filtro-central {
+                width: 22px;
+                height: 22px;
+            }
+
+            .icone-filtro-central svg {
+                width: 19px;
+                height: 19px;
+            }
+        }
+    </style>
+
+    <script>
+        // Deixa um dos 5 botões selecionado visualmente ao clicar.
+        document.querySelectorAll('.botao-filtro-central').forEach(function (botao) {
+            botao.addEventListener('click', function () {
+                document.querySelectorAll('.botao-filtro-central').forEach(function (item) {
+                    item.classList.remove('ativo');
+                });
+
+                botao.classList.add('ativo');
+            });
+        });
+    </script>
+
+    <!-- ==================== SEÇÃO DO CARROSSEL HORIZONTAL ==================== -->
+    <header class="cabecalho-categoria-plantas">
+        <h2 class="carousel-categoria-titulo">Frutíferas</h2>
+    </header>
+
+    <div class="carousel-area-com-setas">
+        <button class="seta-carousel seta-carousel-esq" type="button" aria-label="Cards anteriores"
+            onclick="moverCarrossel(this, -1)">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" />
+            </svg>
+        </button>
+
+        <div class="carousel-container container-frutiferas">
+            <!-- CARD 1 -->
+            <div class="carousel-card">
+                <a href="Card 1 frutíferas.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-1.jpg</span>
+                        <img src="sua-imagem1.jpg" alt="Destaque 1">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★★</div>
+                            <div class="price">$240.00</div>
+                        </div>
+                        <h3>Título do Card 1</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (24)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="carousel-card">
+                <a href="Card 2 frutíferas.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-2.jpg</span>
+                        <img src="sua-imagem2.jpg" alt="Destaque 2">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★☆☆</div>
+                            <div class="price">$480.00</div>
+                        </div>
+                        <h3>Título do Card 2</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (48)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="carousel-card">
+                <a href="Card 3 frutíferas.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-3.jpg</span>
+                        <img src="sua-imagem3.jpg" alt="Destaque 3">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★★</div>
+                            <div class="price">$360.00</div>
+                        </div>
+                        <h3>Título do Card 3</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (74)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 4 -->
+            <div class="carousel-card">
+                <a href="Card 4 frutíferas.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-4.jpg</span>
+                        <img src="sua-imagem4.jpg" alt="Destaque 4">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★☆</div>
+                            <div class="price">$150.00</div>
+                        </div>
+                        <h3>Título do Card 4</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (12)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 5 -->
+            <div class="carousel-card">
+                <a href="Card 5 frutíferas.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-5.jpg</span>
+                        <img src="sua-imagem5.jpg" alt="Destaque 5">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★★</div>
+                            <div class="price">$200.00</div>
+                        </div>
+                        <h3>Título do Card 5</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (35)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 6 -->
+            <div class="carousel-card">
+                <a href="Card 6 frutíferas.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-6.jpg</span>
+                        <img src="sua-imagem6.jpg" alt="Destaque 6">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★☆☆☆</div>
+                            <div class="price">$99.00</div>
+                        </div>
+                        <h3>Título do Card 6</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (18)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 7 -->
+            <div class="carousel-card">
+                <a href="Card 7 frutíferas.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-7.jpg</span>
+                        <img src="sua-imagem7.jpg" alt="Destaque 7">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★★</div>
+                            <div class="price">$310.00</div>
+                        </div>
+                        <h3>Título do Card 7</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (64)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 8 -->
+            <div class="carousel-card">
+                <a href="Card 8 frutíferas.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-8.jpg</span>
+                        <img src="sua-imagem8.jpg" alt="Destaque 8">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★☆</div>
+                            <div class="price">$420.00</div>
+                        </div>
+                        <h3>Título do Card 8</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (51)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 9 -->
+            <div class="carousel-card">
+                <a href="Card 9 frutíferas.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-9.jpg</span>
+                        <img src="sua-imagem9.jpg" alt="Destaque 9">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★★</div>
+                            <div class="price">$180.00</div>
+                        </div>
+                        <h3>Título do Card 9</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (29)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 10 -->
+            <div class="carousel-card">
+                <a href="Card 10 frutíferas.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-10.jpg</span>
+                        <img src="sua-imagem10.jpg" alt="Destaque 10">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★☆☆</div>
+                            <div class="price">$290.00</div>
+                        </div>
+                        <h3>Título do Card 10</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (42)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 11 -->
+            <div class="carousel-card">
+                <a href="Card 11 frutíferas.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-11.jpg</span>
+                        <img src="sua-imagem11.jpg" alt="Destaque 11">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★☆</div>
+                            <div class="price">$125.00</div>
+                        </div>
+                        <h3>Título do Card 11</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (15)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 12 -->
+            <div class="carousel-card">
+                <a href="Card 12 frutíferas.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-12.jpg</span>
+                        <img src="sua-imagem12.jpg" alt="Destaque 12">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★★</div>
+                            <div class="price">$500.00</div>
+                        </div>
+                        <h3>Título do Card 12</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (88)</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <button class="seta-carousel seta-carousel-dir" type="button" aria-label="Próximos cards"
+            onclick="moverCarrossel(this, 1)">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- ==================== SEGUNDO CARROSSEL: NOVA CATEGORIA ==================== -->
+    <header class="cabecalho-categoria-plantas">
+        <h2 class="carousel-categoria-titulo">Medicinais</h2>
+    </header>
+
+    <div class="carousel-area-com-setas">
+        <button class="seta-carousel seta-carousel-esq" type="button" aria-label="Cards anteriores"
+            onclick="moverCarrossel(this, -1)">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" />
+            </svg>
+        </button>
+
+        <div class="carousel-container container-nova-categoria">
+            <!-- CARD 1 -->
+            <div class="carousel-card">
+                <a href="Card 1 medicinais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-1.jpg</span>
+                        <img src="sua-imagem1.jpg" alt="Destaque 1">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★★</div>
+                            <div class="price">$240.00</div>
+                        </div>
+                        <h3>Título do Card 1</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (24)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="carousel-card">
+                <a href="Card 2 medicinais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-2.jpg</span>
+                        <img src="sua-imagem2.jpg" alt="Destaque 2">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★☆☆</div>
+                            <div class="price">$480.00</div>
+                        </div>
+                        <h3>Título do Card 2</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (48)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="carousel-card">
+                <a href="Card 3 medicinais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-3.jpg</span>
+                        <img src="sua-imagem3.jpg" alt="Destaque 3">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★★</div>
+                            <div class="price">$360.00</div>
+                        </div>
+                        <h3>Título do Card 3</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (74)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 4 -->
+            <div class="carousel-card">
+                <a href="Card 4 medicinais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-4.jpg</span>
+                        <img src="sua-imagem4.jpg" alt="Destaque 4">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★☆</div>
+                            <div class="price">$150.00</div>
+                        </div>
+                        <h3>Título do Card 4</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (12)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 5 -->
+            <div class="carousel-card">
+                <a href="Card 5 medicinais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-5.jpg</span>
+                        <img src="sua-imagem5.jpg" alt="Destaque 5">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★★</div>
+                            <div class="price">$200.00</div>
+                        </div>
+                        <h3>Título do Card 5</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (35)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 6 -->
+            <div class="carousel-card">
+                <a href="Card 6 medicinais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-6.jpg</span>
+                        <img src="sua-imagem6.jpg" alt="Destaque 6">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★☆☆☆</div>
+                            <div class="price">$99.00</div>
+                        </div>
+                        <h3>Título do Card 6</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (18)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 7 -->
+            <div class="carousel-card">
+                <a href="Card 7 medicinais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-7.jpg</span>
+                        <img src="sua-imagem7.jpg" alt="Destaque 7">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★★</div>
+                            <div class="price">$310.00</div>
+                        </div>
+                        <h3>Título do Card 7</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (64)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 8 -->
+            <div class="carousel-card">
+                <a href="Card 8 medicinais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-8.jpg</span>
+                        <img src="sua-imagem8.jpg" alt="Destaque 8">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★☆</div>
+                            <div class="price">$420.00</div>
+                        </div>
+                        <h3>Título do Card 8</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (51)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 9 -->
+            <div class="carousel-card">
+                <a href="Card 9 medicinais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-9.jpg</span>
+                        <img src="sua-imagem9.jpg" alt="Destaque 9">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★★</div>
+                            <div class="price">$180.00</div>
+                        </div>
+                        <h3>Título do Card 9</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (29)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 10 -->
+            <div class="carousel-card">
+                <a href="Card 10 medicinais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-10.jpg</span>
+                        <img src="sua-imagem10.jpg" alt="Destaque 10">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★☆☆</div>
+                            <div class="price">$290.00</div>
+                        </div>
+                        <h3>Título do Card 10</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (42)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 11 -->
+            <div class="carousel-card">
+                <a href="Card 11 medicinais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-11.jpg</span>
+                        <img src="sua-imagem11.jpg" alt="Destaque 11">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★☆</div>
+                            <div class="price">$125.00</div>
+                        </div>
+                        <h3>Título do Card 11</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (15)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 12 -->
+            <div class="carousel-card">
+                <a href="Card 12 medicinais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-12.jpg</span>
+                        <img src="sua-imagem12.jpg" alt="Destaque 12">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★★</div>
+                            <div class="price">$500.00</div>
+                        </div>
+                        <h3>Título do Card 12</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (88)</div>
+                    </div>
+                </a>
+            </div>
+ 
+        </div>
+        <button class="seta-carousel seta-carousel-dir" type="button" aria-label="Próximos cards"
+            onclick="moverCarrossel(this, 1)">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
+            </svg>
+        </button>
+    </div>
+      <!-- ==================== SEGUNDO CARROSSEL: NOVA CATEGORIA ==================== -->
+    <header class="cabecalho-categoria-plantas">
+        <h2 class="carousel-categoria-titulo">Ornamentais</h2>
+    </header>
+
+    <div class="carousel-area-com-setas">
+        <button class="seta-carousel seta-carousel-esq" type="button" aria-label="Cards anteriores"
+            onclick="moverCarrossel(this, -1)">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" />
+            </svg>
+        </button>
+
+        <div class="carousel-container container-nova-categoria">
+            <!-- CARD 1 -->
+            <div class="carousel-card">
+                <a href="Card 1 ornamentais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-1.jpg</span>
+                        <img src="sua-imagem1.jpg" alt="Destaque 1">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★★</div>
+                            <div class="price">$240.00</div>
+                        </div>
+                        <h3>Título do Card 1</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (24)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="carousel-card">
+                <a href="Card 2 ornamentais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-2.jpg</span>
+                        <img src="sua-imagem2.jpg" alt="Destaque 2">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★☆☆</div>
+                            <div class="price">$480.00</div>
+                        </div>
+                        <h3>Título do Card 2</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (48)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="carousel-card">
+                <a href="Card 3 ornamentais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-3.jpg</span>
+                        <img src="sua-imagem3.jpg" alt="Destaque 3">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★★</div>
+                            <div class="price">$360.00</div>
+                        </div>
+                        <h3>Título do Card 3</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (74)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 4 -->
+            <div class="carousel-card">
+                <a href="Card 4 ornamentais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-4.jpg</span>
+                        <img src="sua-imagem4.jpg" alt="Destaque 4">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★☆</div>
+                            <div class="price">$150.00</div>
+                        </div>
+                        <h3>Título do Card 4</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (12)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 5 -->
+            <div class="carousel-card">
+                <a href="Card 5 ornamentais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-5.jpg</span>
+                        <img src="sua-imagem5.jpg" alt="Destaque 5">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★★</div>
+                            <div class="price">$200.00</div>
+                        </div>
+                        <h3>Título do Card 5</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (35)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 6 -->
+            <div class="carousel-card">
+                <a href="Card 6 ornamentais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-6.jpg</span>
+                        <img src="sua-imagem6.jpg" alt="Destaque 6">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★☆☆☆</div>
+                            <div class="price">$99.00</div>
+                        </div>
+                        <h3>Título do Card 6</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (18)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 7 -->
+            <div class="carousel-card">
+                <a href="Card 7 ornamentais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-7.jpg</span>
+                        <img src="sua-imagem7.jpg" alt="Destaque 7">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★★</div>
+                            <div class="price">$310.00</div>
+                        </div>
+                        <h3>Título do Card 7</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (64)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 8 -->
+            <div class="carousel-card">
+                <a href="Card 8 ornamentais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-8.jpg</span>
+                        <img src="sua-imagem8.jpg" alt="Destaque 8">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★☆</div>
+                            <div class="price">$420.00</div>
+                        </div>
+                        <h3>Título do Card 8</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (51)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 9 -->
+            <div class="carousel-card">
+                <a href="Card 9 ornamentais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-9.jpg</span>
+                        <img src="sua-imagem9.jpg" alt="Destaque 9">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★★</div>
+                            <div class="price">$180.00</div>
+                        </div>
+                        <h3>Título do Card 9</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (29)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 10 -->
+            <div class="carousel-card">
+                <a href="Card 10 ornamentais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-10.jpg</span>
+                        <img src="sua-imagem10.jpg" alt="Destaque 10">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★☆☆</div>
+                            <div class="price">$290.00</div>
+                        </div>
+                        <h3>Título do Card 10</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (42)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 11 -->
+            <div class="carousel-card">
+                <a href="Card 11 ornamentais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-11.jpg</span>
+                        <img src="sua-imagem11.jpg" alt="Destaque 11">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★☆</div>
+                            <div class="price">$125.00</div>
+                        </div>
+                        <h3>Título do Card 11</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (15)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- CARD 12 -->
+            <div class="carousel-card">
+                <a href="Card 12 ornamentais.html" class="carousel-card-link">
+                    <div class="photo-wrapper">
+                        <span class="carousel-photo-name">nome-da-foto-12.jpg</span>
+                        <img src="sua-imagem12.jpg" alt="Destaque 12">
+                    </div>
+                    <div class="carousel-info">
+                        <div class="stars-price">
+                            <div class="stars">★★★★★</div>
+                            <div class="price">$500.00</div>
+                        </div>
+                        <h3>Título do Card 12</h3>
+                        <p>Descrição rápida do conteúdo aqui.</p>
+                        <div class="reviews">Reviews (88)</div>
+                    </div>
+                </a>
+            </div>
+ 
+        </div>
+        <button class="seta-carousel seta-carousel-dir" type="button" aria-label="Próximos cards"
+            onclick="moverCarrossel(this, 1)">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
+            </svg>
+        </button>
+    </div>
+    
+    </main>
+    
+
+
+    <style>
+        /* Margem para o conteúdo não ficar escondido atrás do menu nav fixo */
+        .conteudo-principal {
+            padding-top: 90px;
+            font-family: sans-serif;
+        }
+
+        /* ==================== CARROSSÉIS COM SETAS ==================== */
+        .carousel-area-com-setas {
+            position: relative;
+            width: min(1280px, 100%);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 0 76px;
+        }
+
+        /* Container dos cards: sem rolagem manual */
+        .carousel-container {
+            display: flex;
+            overflow: hidden;
+            gap: 20px;
+            padding: 20px 0;
+            scroll-behavior: smooth;
+            max-width: 1160px;
+            width: 100%;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        /* ==================== SETAS DOS CARROSSÉIS ==================== */
+        .seta-carousel {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            border: none;
+            border-radius: 50%;
+            background-color: #5cb82a;
+            color: #ffffff;
+            cursor: pointer;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+            transition: background-color 0.2s, transform 0.2s, opacity 0.2s;
+        }
+
+        .seta-carousel:hover {
+            background-color: #4da31f;
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .seta-carousel svg {
+            width: 28px;
+            height: 28px;
+            fill: currentColor;
+        }
+
+        .seta-carousel-esq {
+            left: 18px;
+        }
+
+        .seta-carousel-dir {
+            right: 18px;
+        }
+
+        @media (max-width: 700px) {
+            .carousel-area-com-setas {
+                padding: 0 58px;
+            }
+
+            .carousel-container {
+                padding: 20px 0;
+            }
+
+            .seta-carousel {
+                width: 40px;
+                height: 40px;
+            }
+
+            .seta-carousel svg {
+                width: 23px;
+                height: 23px;
+            }
+
+            .seta-carousel-esq {
+                left: 8px;
+            }
+
+            .seta-carousel-dir {
+                right: 8px;
+            }
+        }
+
+        /* Cards Individuais */
+        .carousel-card {
+            flex: 0 0 300px;
+            /* Largura fixa de cada card */
+            scroll-snap-align: start;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
+            /* Adicionada transição suave para as cores */
+        }
+
+        .carousel-card:hover {
+            transform: translateY(-5px);
+            /* Pequeno efeito flutuante ao passar o mouse */
+        }
+
+        /* Container da Foto para permitir o posicionamento do nome */
+        .photo-wrapper {
+            position: relative;
+            width: 100%;
+            height: 200px;
+        }
+
+        /* Espaço para o Nome da Foto */
+        .carousel-photo-name {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            /* Fundo escuro transparente */
+            color: #ffffff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: monospace;
+            /* Fonte estilo código para nomes de arquivos */
+            pointer-events: none;
+            /* Garante que o clique passe direto para o card */
+            z-index: 2;
+        }
+
+        /* Imagens dos Cards */
+        .carousel-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Faz a imagem cortar proporcionalmente sem amassar */
+            display: block;
+            background-color: #eee;
+            /* Fundo cinza padrão */
+        }
+
+        /* Textos informativos abaixo da imagem */
+        .carousel-info {
+            padding: 15px;
+        }
+
+        .carousel-info h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .carousel-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        /* Corrigido: Chave fechada para não isolar o código abaixo */
+
+        /* Estilização do Título da Categoria com Recuo para a Direita */
+        .carousel-categoria-titulo {
+            margin: 20px 0 0 10%;
+            /* O '10%' empurra o texto para a direita em relação à tela */
+            padding: 0 20px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--card-title, #054905);
+            text-align: left;
+            /* Garante o alinhamento correto à esquerda do bloco */
+        }
+
+        /* Alinhamento dos novos componentes dos cards baseado no modelo Zay */
+        .carousel-card-link {
+            text-decoration: none;
+            color: #212529;
+            display: block;
+            transition: color 0.2s;
+        }
+
+        .stars-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .stars {
+            color: #ffc107;
+            /* Cor dourada das estrelas */
+            font-size: 14px;
+        }
+
+        .price {
+            color: #888888;
+            /* Cor cinza do preço */
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .carousel-info h3 {
+            font-size: 18px;
+            margin: 0 0 8px 0;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .carousel-info p {
+            color: #697582;
+            font-size: 14px;
+            line-height: 1.4;
+            margin: 0 0 12px 0;
+            transition: color 0.2s;
+        }
+
+        .reviews {
+            color: #a3b1bf;
+            font-size: 12px;
+            transition: color 0.2s;
+        }
+
+        /* ==================== NOVO: ESTILOS PARA O MODO ESCURO (DARK MODE) ==================== */
+
+        /* Altera a cor de fundo do card e adiciona uma borda sutil no tema escuro */
+        .dark .carousel-card {
+            background-color: #1f1f1f !important;
+            border: 1px solid #333333 !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        /* Altera a cor do texto do link no modo escuro */
+        .dark .carousel-card-link {
+            color: #ffffff !important;
+        }
+
+        /* Deixa o título interno do produto branco */
+        .dark .carousel-info h3 {
+            color: #ffffff !important;
+        }
+
+        /* Suaviza e clareia o parágrafo de descrição para ficar legível sobre o fundo escuro */
+        .dark .carousel-info p {
+            color: #b0b8c4 !important;
+        }
+
+        /* Ajusta o texto cinza do preço para um tom prata brilhante */
+        .dark .price {
+            color: #cccccc !important;
+        }
+
+        /* Destaca o texto do contador de avaliações */
+        .dark .reviews {
+            color: #7b8a99 !important;
+        }
+
+        /* Altera a cor do título da categoria (Ex: Plantas de Sol) no modo escuro */
+        .dark .carousel-categoria-titulo {
+            color: #ffffff !important;
+        }
+
+        /* ==================== RESPONSIVO ==================== */
+        @media (max-width: 700px) {
+            .carousel-area-com-setas {
+                width: 100%;
+                padding: 0 58px;
+            }
+
+            .carousel-container {
+                padding: 20px 0;
+            }
+
+            .carousel-card {
+                flex: 0 0 min(300px, calc(100vw - 132px));
+                max-width: 300px;
+            }
+
+            .seta-carousel {
+                width: 42px;
+                height: 42px;
+            }
+
+            .seta-carousel svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            .seta-carousel-esq {
+                left: 8px;
+            }
+
+            .seta-carousel-dir {
+                right: 8px;
+            }
+        }
+    </style>
+
+
+    <link rel="stylesheet" href="style1.css">
+
+    <script>
+        // ==================== JAVASCRIPT DAS SETAS DOS CARROSSÉIS ====================
+        // Os cards não possuem mais rolagem manual. O movimento acontece somente pelas setas.
+        function moverCarrossel(botao, direcao) {
+            const area = botao.closest('.carousel-area-com-setas');
+            const carrossel = area.querySelector('.carousel-container');
+            const card = carrossel.querySelector('.carousel-card');
+
+            if (!card) return;
+
+            const distancia = card.offsetWidth + 20;
+            carrossel.scrollBy({
+                left: direcao * distancia,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
+
+
+
+
+    <script src="script.js"></script>
+
+
+    <!-- ==================== BUSCA INTELIGENTE EM ORDEM ALFABÉTICA ==================== -->
+    <style>
+        .cabecalho-categoria-plantas {
+            margin: 40px 80px 8px;
+        }
+
+        .search-field {
+            position: relative;
+        }
+
+        .resultados-busca-plantas {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            width: min(420px, calc(100vw - 30px));
+            max-height: 360px;
+            overflow-y: auto;
+            display: none;
+            background: #ffffff;
+            border: 1px solid #e3e3e3;
+            border-radius: 12px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .18);
+            z-index: 20000;
+            padding: 8px;
+        }
+
+        .resultados-busca-plantas.aberto {
+            display: block;
+        }
+
+        .resultado-busca-planta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            border: 0;
+            border-radius: 8px;
+            background: transparent;
+            color: inherit;
+            padding: 11px 12px;
+            text-align: left;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .resultado-busca-planta:hover,
+        .resultado-busca-planta:focus {
+            background: rgba(92, 184, 42, .12);
+            outline: none;
+        }
+
+        .resultado-busca-planta strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .resultado-busca-planta small {
+            display: block;
+            margin-top: 3px;
+            opacity: .7;
+            font-size: 11px;
+        }
+
+        .busca-sem-resultados {
+            padding: 16px 12px;
+            text-align: center;
+            opacity: .75;
+            font-size: 13px;
+        }
+
+        .dark .resultados-busca-plantas {
+            background: #1f1f1f;
+            border-color: #333;
+            color: #fff;
+        }
+
+        @media (max-width: 700px) {
+            .cabecalho-categoria-plantas {
+                margin: 28px 20px 8px;
+            }
+
+            .resultados-busca-plantas {
+                right: -45px;
+                width: min(340px, calc(100vw - 20px));
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const campoBusca = document.getElementById('buscaPlantas');
+            if (!campoBusca) return;
+
+            const caixaBusca = campoBusca.closest('.searchBox') || campoBusca.parentElement;
+            const campo = campoBusca.parentElement;
+            const resultados = document.createElement('div');
+            resultados.className = 'resultados-busca-plantas';
+            resultados.setAttribute('role', 'listbox');
+            resultados.setAttribute('aria-label', 'Resultados da busca');
+            campo.appendChild(resultados);
+
+            function normalizar(texto) {
+                return String(texto || '')
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
+                    .trim();
+            }
+
+            function criarIndiceDoSite() {
+                const itens = [];
+                const nomesJaAdicionados = new Set();
+
+                // Card central e demais dados cadastrados no JavaScript.
+                if (typeof dadosDosCards !== 'undefined' && Array.isArray(dadosDosCards)) {
+                    dadosDosCards.forEach(function (item, indice) {
+                        const nome = item.titulo || item.fotoLabel || ('Planta ' + (indice + 1));
+                        const chave = normalizar(nome + '|' + (item.link || ''));
+                        if (!nomesJaAdicionados.has(chave)) {
+                            nomesJaAdicionados.add(chave);
+                            itens.push({
+                                nome: nome,
+                                categoria: 'Destaque',
+                                link: item.link || '',
+                                elemento: null,
+                                palavras: [nome, item.descricao, item.fotoLabel, item.imagem, item.link].join(' ')
+                            });
+                        }
+                    });
+                }
+
+                // Todos os cards que já existem no site.
+                document.querySelectorAll('.carousel-card').forEach(function (card) {
+                    const link = card.querySelector('a.carousel-card-link');
+                    const titulo = card.querySelector('h3');
+                    const descricao = card.querySelector('p');
+                    const foto = card.querySelector('.carousel-photo-name');
+                    const imagem = card.querySelector('img');
+
+                    const nome = (titulo && titulo.textContent.trim()) ||
+                        (imagem && imagem.alt.trim()) ||
+                        (foto && foto.textContent.trim()) ||
+                        'Planta';
+
+                    const container = card.closest('.carousel-area-com-setas');
+                    let categoria = '';
+                    if (container) {
+                        const anterior = container.previousElementSibling;
+                        if (anterior && anterior.querySelector) {
+                            const tituloCategoria = anterior.querySelector('.carousel-categoria-titulo');
+                            if (tituloCategoria) categoria = tituloCategoria.textContent.trim();
+                        }
+                    }
+
+                    const chave = normalizar(nome + '|' + (link ? link.getAttribute('href') : ''));
+                    if (!nomesJaAdicionados.has(chave)) {
+                        nomesJaAdicionados.add(chave);
+                        itens.push({
+                            nome: nome,
+                            categoria: categoria || 'Plantas',
+                            link: link ? link.getAttribute('href') : '',
+                            elemento: card,
+                            palavras: [
+                                nome,
+                                categoria,
+                                descricao ? descricao.textContent : '',
+                                foto ? foto.textContent : '',
+                                imagem ? imagem.getAttribute('src') : '',
+                                imagem ? imagem.alt : '',
+                                link ? link.getAttribute('href') : ''
+                            ].join(' ')
+                        });
+                    }
+                });
+
+                // Ordem alfabética, ignorando acentos: Ipê vem junto de Ipe.
+                return itens.sort(function (a, b) {
+                    return a.nome.localeCompare(b.nome, 'pt-BR', {
+                        sensitivity: 'base',
+                        numeric: true
+                    });
+                });
+            }
+
+            function destacarResultado(nome, termo) {
+                if (!termo) return nome;
+                const indice = normalizar(nome).indexOf(termo);
+                if (indice === -1) return nome;
+
+                // Mantém o texto original e apenas destaca visualmente a parte encontrada.
+                return nome;
+            }
+
+            function mostrarResultados() {
+                const termoOriginal = campoBusca.value.trim();
+                const termo = normalizar(termoOriginal);
+                const indice = criarIndiceDoSite();
+
+                if (!termo) {
+                    resultados.innerHTML = '';
+                    resultados.classList.remove('aberto');
+                    return;
+                }
+
+                const encontrados = indice.filter(function (item) {
+                    return normalizar(item.palavras).includes(termo);
+                });
+
+                resultados.innerHTML = '';
+
+                if (!encontrados.length) {
+                    resultados.innerHTML = '<div class="busca-sem-resultados">Nenhuma planta encontrada para “' +
+                        termoOriginal.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '”.</div>';
+                    resultados.classList.add('aberto');
+                    return;
+                }
+
+                encontrados.forEach(function (item) {
+                    const botao = document.createElement('button');
+                    botao.type = 'button';
+                    botao.className = 'resultado-busca-planta';
+
+                    const nome = document.createElement('span');
+                    const forte = document.createElement('strong');
+                    forte.textContent = destacarResultado(item.nome, termo);
+                    nome.appendChild(forte);
+
+                    const categoria = document.createElement('small');
+                    categoria.textContent = item.categoria;
+                    nome.appendChild(categoria);
+
+                    botao.appendChild(nome);
+
+                    botao.addEventListener('click', function () {
+                        resultados.classList.remove('aberto');
+
+                        if (item.link && item.link !== '#') {
+                            window.location.href = item.link;
+                            return;
+                        }
+
+                        if (item.element) {
+                            item.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            item.element.style.outline = '3px solid #5cb82a';
+                            setTimeout(function () {
+                                item.element.style.outline = '';
+                            }, 1800);
+                        }
+                    });
+
+                    resultados.appendChild(botao);
+                });
+
+                resultados.classList.add('aberto');
+            }
+
+            campoBusca.addEventListener('input', mostrarResultados);
+
+            campoBusca.addEventListener('focus', function () {
+                if (campoBusca.value.trim()) mostrarResultados();
+            });
+
+            campoBusca.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    const primeiro = resultados.querySelector('.resultado-busca-planta');
+                    if (primeiro) {
+                        event.preventDefault();
+                        primeiro.click();
+                    }
+                }
+
+                if (event.key === 'Escape') {
+                    resultados.classList.remove('aberto');
+                    campoBusca.blur();
+                }
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!caixaBusca.contains(event.target)) {
+                    resultados.classList.remove('aberto');
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
+
+<br>
+<br>
+<br>
+
+<!-- ==================== CONTAINER DO RODAPÉ (FOOTER) ==================== -->
+<footer class="rodape-zay-shop">
+    <div class="rodape-grid">
+
+        <!-- COLUNA 1: Nome da Loja e Contatos -->
+        <div class="rodape-coluna">
+            <h2 class="rodape-logo-titulo">Zay Shop</h2>
+            <ul class="rodape-lista-contatos">
+                <li><span class="icon-emoji">📍</span> 123 Consectetur at ligula 10660</li>
+                <li><span class="icon-emoji">📞</span> 010-020-0340</li>
+                <li><span class="icon-emoji">✉️</span> info@company.com</li>
+            </ul>
+        </div>
+
+        <!-- COLUNA 2: Categorias/Produtos -->
+        <div class="rodape-coluna">
+            <h3 class="rodape-coluna-titulo">Products</h3>
+            <ul class="rodape-links-lista">
+                <li><a href="#">Luxury</a></li>
+                <li><a href="#">Sport Wear</a></li>
+                <li><a href="#">Men's Shoes</a></li>
+                <li><a href="#">Women's Shoes</a></li>
+                <li><a href="#">Dress Shoes</a></li>
+                <li><a href="#">Gym Accessories</a></li>
+                <li><a href="#">Sport Shoes</a></li>
+            </ul>
+        </div>
+
+        <!-- COLUNA 3: Informações Adicionais -->
+        <div class="rodape-coluna">
+            <h3 class="rodape-coluna-titulo">Further Info</h3>
+            <ul class="rodape-links-lista">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Shop Locations</a></li>
+                <li><a href="#">FAQs</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+
+    </div>
+</footer>
+
+<!-- ==================== CSS ISOLADO DO RODAPÉ ==================== -->
+<style>
+    /* Fundo escuro total do rodapé baseado na imagem */
+    .rodape-zay-shop {
+        background-color: #212934;
+        color: #cfd6e0;
+        padding: 60px 8% 50px 8%;
+        font-family: sans-serif;
+    }
+
+    /* Grid que divide as 3 colunas proporcionalmente */
+    .rodape-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Estilização da Coluna 1 (Título Verde) */
+    .rodape-logo-titulo {
+        color: #5cb82a;
+        /* Verde exato da marca na imagem */
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin: 0 0 20px 0;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #2d3846;
+        /* Linha sutil de divisão */
+    }
+
+    /* Estilização das Colunas 2 e 3 (Títulos Brancos) */
+    .rodape-coluna-titulo {
+        color: #ffffff;
+        font-size: 1.3rem;
+        font-weight: 500;
+        margin: 0 0 20px 0;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #2d3846;
+        /* Linha sutil de divisão */
+    }
+
+    /* Configurações das listas */
+    .rodape-lista-contatos,
+    .rodape-links-lista {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Itens da lista de contato (Texto puro) */
+    .rodape-lista-contatos li {
+        font-size: 0.95rem;
+        margin-bottom: 14px;
+        color: #cfd6e0;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Alinhamento dos emojis de contato */
+    .icon-emoji {
+        margin-right: 10px;
+        font-size: 1.1rem;
+    }
+
+    /* Itens com links de navegação */
+    .rodape-links-lista li {
+        margin-bottom: 12px;
+    }
+
+    /* Links do rodapé e efeito ao passar o mouse */
+    .rodape-links-lista li a {
+        color: #cfd6e0;
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: color 0.2s ease;
+    }
+
+    .rodape-links-lista li a:hover {
+        color: #5cb82a;
+        /* Link acende em verde ao passar o mouse */
+    }
+
+    /* Ajuste para telas pequenas de celular não quebrarem o alinhamento */
+    @media (max-width: 768px) {
+        .rodape-zay-shop {
+            padding: 40px 5%;
+        }
+
+        .rodape-grid {
+            gap: 30px;
+        }
+    }
+</style>
+
+</body>
+
+</html>

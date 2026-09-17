@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Style.css">
+    <title>Solo em Equilíbrio - Conteúdo do Card 7 frutíferas</title>
+    <style>
+        /* ==================== ESTILOS DA PÁGINA DE CONTEÚDO DETALHADO ==================== */
+        .conteudo-detalhado-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Título Principal */
+        .detalhe-titulo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--card-title, #054905);
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        /* Bloco com o Nome Técnico da Imagem */
+        .detalhe-photo-box {
+            position: relative;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px var(--card-shadow, rgba(0,0,0,0.1));
+        }
+
+        .detalhe-photo-name {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-family: monospace;
+            z-index: 2;
+        }
+
+        /* Imagem em Destaque Expandida */
+        .detalhe-imagem {
+            width: 100%;
+            height: auto;
+            max-height: 450px;
+            object-fit: cover;
+            display: block;
+            background-color: #eee;
+        }
+
+        /* Texto Explicativo Principal */
+        .detalhe-texto-corpo {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: var(--card-desc, #333333);
+        }
+
+        /* Parágrafos internos para espaçamento correto */
+        .detalhe-texto-corpo p {
+            margin-bottom: 16px;
+        }
+        
+        .detalhe-texto-corpo p:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-bar">
+            <!-- Ícone Menu Hambúrguer (SVG Nativo) -->
+            <svg class="sidebarOpen" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+            
+            <span class="logo"><a>Solo em Equilíbrio</a></span>
+            
+            <div class="menu">
+                <div class="logo-toggle">
+                    <span class="logo"><a>Solo em Equilíbrio</a></span>
+                    <!-- Ícone Fechar X do Menu (SVG Nativo) -->
+                    <svg class="sidebarClose" viewBox="0 0 24 24"><path d="m16.192 6.344-4.192 4.192-4.192-4.192-1.414 1.414 4.192 4.192-4.192 4.192 1.414 1.414 4.192-4.192 4.192 4.192 1.414-1.414-4.192-4.192 4.192-4.192z"/></svg>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="portifolio.html">Portifólio</a></li>
+                    <li><a href="#">Equipe</a></li>
+                    <li><a href="#">Informações</a></li>
+                    <li><a href="#">Dúvidas</a></li>
+                    <li><a href="#">Feedback</a></li>
+                </ul>
+            </div>
+            
+            <div class="darkLight-searchBox">
+                <div class="dark-light">
+                    <!-- Ícone Lua (SVG Nativo) -->
+                    <svg class="moon" viewBox="0 0 24 24"><path d="M12 11.807A9.002 9.002 0 0 1 10.049 2a9.944 9.944 0 0 0-5.244 2.193C.961 7.472.71 13.568 4.212 17.07c3.5 3.5 9.597 3.25 12.877-.594A9.943 9.943 0 0 0 19.28 11.23a9.006 9.006 0 0 1-7.28.577z"/></svg>
+                    <!-- Ícone Sol (SVG Nativo) -->
+                    <svg class="sun" viewBox="0 0 24 24"><path d="M6.993 12c0 2.761 2.246 5 5.007 5s5.007-2.239 5.007-5-2.246-5-5.007-5-5.007 2.239-5.007 5zM11 2h2v3h-2zm0 14h2v3h-2zm-7-5h3v2H4zm13 0h3v2h-3zM5.637 5.635l2.121 2.122-1.414 1.414-2.122-2.122zm10.535 10.536 2.122 2.121-1.414 1.414-2.122-2.121zm-10.535 8.414l-2.122-2.122 1.414-1.414 2.122 2.122zm12.656-12.657 1.414-1.414 2.122 2.122-1.414 1.414z"/></svg>
+                </div>
+                <div class="searchBox">
+                    <div class="searchToggle">
+                        <!-- Ícone Cancelar X da Busca (SVG Nativo) -->
+                        <svg class="cancel" viewBox="0 0 24 24"><path d="m16.192 6.344-4.192 4.192-4.192-4.192-1.414 1.414 4.192 4.192-4.192 4.192 1.414 1.414 4.192-4.192 4.192 4.192 1.414-1.414-4.192-4.192 4.192-4.192z"/></svg>
+                        <!-- Ícone Lupa Principal (SVG Nativo) -->
+                        <svg class="search" viewBox="0 0 24 24"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"/></svg>
+                    </div>
+                    <div class="search-field">
+                        <input type="text" placeholder="Buscar...">
+                        <!-- Ícone Lupa Interna do Input (SVG Nativo) -->
+                        <svg class="input-search-icon" viewBox="0 0 24 24"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"/></svg>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </nav>
+
+    <!-- AREA DE CONTEÚDO PRINCIPAL DA PÁGINA INTERNA -->
+    <main class="conteudo-principal">
+        <article class="conteudo-detalhado-container">
+            
+            <!-- Título do Conteúdo -->
+            <h1 class="detalhe-titulo">Título Completo Relacionado ao Card 7 frutíferas</h1>
+            
+            <!-- Imagem e seu Nome de Arquivo Identificador -->
+            <div class="detalhe-photo-box">
+                <span class="detalhe-photo-name">nome-da-foto-7.jpg</span>
+                <img src="sua-imagem7.jpg" alt="Destaque Card 7 frutíferas" class="detalhe-imagem">
+            </div>
+            
+            <!-- Texto Completo/Explicativo sobre o Conteúdo -->
+            <div class="detalhe-texto-corpo">
+                <p>
+                    Aqui você começará a escrever o parágrafo inicial detalhando todas as informações completas do Card 7 frutíferas. Como a página já puxa o seu arquivo <strong>Style.css</strong> unificado, o estilo tipográfico e as fontes herdarão o design padrão da marca.
+                </p>
+                <p>
+                    Adicione quantos parágrafos forem necessários nesta área para descrever as ações, metodologias ou portfólio da iniciativa Solo em Equilíbrio. O layout foi centralizado e otimizado para que a leitura fique agradável tanto em telas grandes quanto em smartphones.
+                </p>
+            </div>
+            
+        </article>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+

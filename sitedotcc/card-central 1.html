@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="card.css">
+
+    <title>Solo em Equilíbrio - Ipê-Rosa</title>
+
+    <style>
+        /* ==========================================================
+   PÁGINA DA PLANTA - ESTILO RESPONSIVO
+   Mantém a identidade verde original do projeto
+========================================================== */
+        .pagina-planta-produto {
+            width: 100%;
+            min-height: 100vh;
+            padding: 110px 5% 70px;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        .planta-produto {
+            width: min(1180px, 100%);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(420px, 1fr) minmax(420px, 0.9fr);
+            gap: 45px;
+            align-items: center;
+        }
+
+        .planta-foto-area {
+            position: relative;
+            height: 650px;
+            overflow: hidden;
+            border-radius: 28px;
+            background: #f1f1f1;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, .12);
+        }
+
+        .planta-foto-principal {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        .planta-acao {
+            position: absolute;
+            top: 20px;
+            width: 46px;
+            height: 46px;
+            border: 1px solid rgba(255, 255, 255, .7);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .85);
+            color: #054905;
+            font-size: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: .2s;
+        }
+
+        .planta-acao:hover {
+            transform: scale(1.08);
+            background: #5cb82a;
+            color: #fff;
+        }
+
+        .favorito {
+            right: 76px;
+        }
+
+        .compartilhar {
+            right: 20px;
+            font-size: 22px;
+        }
+
+        .planta-conteudo {
+            padding: 15px 5px;
+        }
+
+        .planta-cabecalho {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .planta-categoria {
+            color: #5cb82a;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        .planta-cabecalho h1 {
+            margin: 8px 0 3px;
+            font-size: clamp(36px, 4vw, 58px);
+            color: var(--card-title, #054905);
+            line-height: 1;
+        }
+
+        .nome-cientifico-produto {
+            margin: 0;
+            color: #697582;
+            font-style: italic;
+            font-size: 16px;
+        }
+
+        .avaliacao {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+            white-space: nowrap;
+        }
+
+        .avaliacao span {
+            color: #ffc107;
+            font-size: 17px;
+            letter-spacing: 1px;
+        }
+
+        .avaliacao small {
+            color: #697582;
+            font-size: 12px;
+        }
+
+        .descricao-produto {
+            margin: 35px 0 28px;
+            color: #697582;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .caracteristicas-planta {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .caracteristica {
+            min-height: 105px;
+            padding: 14px 8px;
+            border: 1px solid #e2e7e2;
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .icone-caracteristica {
+            font-size: 24px;
+            color: #5cb82a;
+            margin-bottom: 7px;
+        }
+
+        .caracteristica strong {
+            color: #054905;
+            font-size: 13px;
+        }
+
+        .caracteristica small {
+            color: #697582;
+            font-size: 10px;
+            margin-top: 5px;
+            line-height: 1.2;
+        }
+
+        .linha-separadora {
+            height: 1px;
+            background: #e2e7e2;
+            margin: 32px 0 24px;
+        }
+
+        .compra-planta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .preco-planta {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preco-planta small {
+            color: #697582;
+            font-size: 12px;
+        }
+
+        .preco-planta strong {
+            color: #054905;
+            font-size: 28px;
+            margin-top: 3px;
+        }
+
+        .botao-carrinho {
+            border: none;
+            border-radius: 12px;
+            background: #5cb82a;
+            color: #fff;
+            padding: 15px 25px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .botao-carrinho:hover {
+            background: #4da31f;
+            transform: translateY(-2px);
+        }
+
+        .informacoes-planta {
+            width: min(1180px, 100%);
+            margin: 65px auto 0;
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 30px;
+        }
+
+        .informacao-bloco,
+        .glossario-produto {
+            padding: 30px;
+            border-radius: 20px;
+            background: rgba(92, 184, 42, .06);
+            border: 1px solid rgba(92, 184, 42, .18);
+        }
+
+        .informacoes-planta h2 {
+            margin-top: 0;
+            color: var(--card-title, #054905);
+        }
+
+        .informacoes-planta p {
+            color: #697582;
+            line-height: 1.7;
+        }
+
+        .termos-grid {
+            display: grid;
+            gap: 17px;
+        }
+
+        .termos-grid div {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .termos-grid strong {
+            color: #5cb82a;
+        }
+
+        .termos-grid span {
+            color: #697582;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* DARK MODE */
+        .dark .planta-cabecalho h1,
+        .dark .preco-planta strong,
+        .dark .caracteristica strong,
+        .dark .informacoes-planta h2 {
+            color: #fff !important;
+        }
+
+        .dark .nome-cientifico-produto,
+        .dark .descricao-produto,
+        .dark .avaliacao small,
+        .dark .caracteristica small,
+        .dark .informacoes-planta p,
+        .dark .termos-grid span,
+        .dark .preco-planta small {
+            color: #b0b8c4;
+        }
+
+        .dark .caracteristica {
+            border-color: #333;
+            background: #1f1f1f;
+        }
+
+        .dark .linha-separadora {
+            background: #333;
+        }
+
+        .dark .informacao-bloco,
+        .dark .glossario-produto {
+            background: rgba(92, 184, 42, .08);
+            border-color: #333;
+        }
+
+        /* ==========================================================
+   CELULAR
+========================================================== */
+        @media (max-width: 850px) {
+            .pagina-planta-produto {
+                padding: 85px 14px 45px;
+            }
+
+            .planta-produto {
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .planta-foto-area {
+                width: 100%;
+                height: min(72vh, 560px);
+                min-height: 430px;
+                border-radius: 24px;
+            }
+
+            .planta-conteudo {
+                width: 100%;
+                padding: 0;
+            }
+
+            .planta-cabecalho {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .planta-cabecalho h1 {
+                font-size: 42px;
+            }
+
+            .avaliacao {
+                align-items: flex-start;
+            }
+
+            .descricao-produto {
+                margin: 22px 0;
+                font-size: 14px;
+            }
+
+            .caracteristicas-planta {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+            }
+
+            .caracteristica {
+                min-height: 92px;
+                padding: 8px 3px;
+                border-radius: 11px;
+            }
+
+            .icone-caracteristica {
+                font-size: 20px;
+            }
+
+            .caracteristica strong {
+                font-size: 10px;
+            }
+
+            .caracteristica small {
+                font-size: 8px;
+            }
+
+            .compra-planta {
+                align-items: stretch;
+            }
+
+            .botao-carrinho {
+                flex: 1;
+                padding: 13px 10px;
+                font-size: 13px;
+            }
+
+            .informacoes-planta {
+                grid-template-columns: 1fr;
+                margin-top: 35px;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .planta-foto-area {
+                height: 500px;
+                min-height: 0;
+            }
+
+            .planta-cabecalho h1 {
+                font-size: 36px;
+            }
+
+            .caracteristica {
+                min-height: 84px;
+            }
+
+            .icone-caracteristica {
+                font-size: 18px;
+            }
+
+            .caracteristica strong {
+                font-size: 9px;
+            }
+
+            .caracteristica small {
+                font-size: 7px;
+            }
+
+            .preco-planta strong {
+                font-size: 23px;
+            }
+
+            .botao-carrinho {
+                font-size: 12px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <nav>
+
+        <div class="nav-bar">
+
+            <!-- Ícone Menu Hambúrguer (SVG Nativo) -->
+            <svg class="sidebarOpen" viewBox="0 0 24 24">
+                <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" />
+            </svg>
+
+            <span class="logo">
+                <a>Solo em Equilíbrio</a>
+            </span>
+
+            <div class="menu">
+
+                <div class="logo-toggle">
+
+                    <span class="logo">
+                        <a>Solo em Equilíbrio</a>
+                    </span>
+
+                    <!-- Ícone Fechar X do Menu (SVG Nativo) -->
+                    <svg class="sidebarClose" viewBox="0 0 24 24">
+                        <path
+                            d="m16.192 6.344-4.192 4.192-4.192-4.192-1.414 1.414 4.192 4.192-4.192 4.192 1.414 1.414 4.192-4.192 4.192 4.192 1.414-1.414-4.192-4.192 4.192-4.192z" />
+                    </svg>
+
+                </div>
+
+                <ul class="nav-links">
+
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="Produtos.html">Produtos</a></li>
+                    <li><a href="#">Equipe</a></li>
+                    <li><a href="#">Informações</a></li>
+                    <li><a href="#">Dúvidas</a></li>
+                    <li><a href="#">Feedback</a></li>
+
+                </ul>
+
+            </div>
+
+            <div class="darkLight-searchBox">
+
+                <div class="dark-light">
+
+                    <!-- Ícone Lua (SVG Nativo) -->
+                    <svg class="moon" viewBox="0 0 24 24">
+                        <path
+                            d="M12 11.807A9.002 9.002 0 0 1 10.049 2a9.944 9.944 0 0 0-5.244 2.193C.961 7.472.71 13.568 4.212 17.07c3.5 3.5 9.597 3.25 12.877-.594A9.943 9.943 0 0 0 19.28 11.23a9.006 9.006 0 0 1-7.28.577z" />
+                    </svg>
+
+                    <!-- Ícone Sol (SVG Nativo) -->
+                    <svg class="sun" viewBox="0 0 24 24" fill="currentColor">
+
+                        <!-- Círculo Central -->
+                        <circle cx="12" cy="12" r="5" />
+
+                        <!-- Raios Verticais e Horizontais -->
+                        <rect x="11" y="2" width="2" height="3" rx="1" />
+                        <rect x="11" y="19" width="2" height="3" rx="1" />
+                        <rect x="2" y="11" width="3" height="2" rx="1" />
+                        <rect x="19" y="11" width="3" height="2" rx="1" />
+
+                        <!-- Raios Diagonais -->
+                        <rect x="5.29" y="5.29" width="2" height="3" rx="1" transform="rotate(-45 6.29 6.79)" />
+
+                        <rect x="16.71" y="15.71" width="2" height="3" rx="1" transform="rotate(-45 17.71 17.21)" />
+
+                        <rect x="16.71" y="5.29" width="2" height="3" rx="1" transform="rotate(45 17.71 6.79)" />
+
+                        <rect x="5.29" y="15.71" width="2" height="3" rx="1" transform="rotate(45 6.29 17.21)" />
+
+                    </svg>
+
+                </div>
+
+                <div class="searchBox">
+
+                    <div class="searchToggle">
+
+                        <!-- Ícone Cancelar X da Busca -->
+                        <svg class="cancel" viewBox="0 0 24 24">
+                            <path
+                                d="m16.192 6.344-4.192 4.192-4.192-4.192-1.414 1.414 4.192 4.192-4.192 4.192 1.414 1.414 4.192-4.192 4.192 4.192 1.414-1.414-4.192-4.192 4.192-4.192z" />
+                        </svg>
+
+                        <!-- Ícone Lupa Principal -->
+                        <svg class="search" viewBox="0 0 24 24">
+                            <path
+                                d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z" />
+                        </svg>
+
+                    </div>
+
+                    <div class="search-field">
+
+                        <input type="text" placeholder="Buscar...">
+
+                        <!-- Ícone Lupa Interna do Input -->
+                        <svg class="input-search-icon" viewBox="0 0 24 24">
+                            <path
+                                d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z" />
+                        </svg>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         CONTEÚDO PRINCIPAL
+    ===================================================== -->
+
+    <main class="pagina-planta-produto">
+
+        <section class="planta-produto">
+
+            <div class="planta-foto-area">
+                <img src="muda-ipe.webp" alt="Ipê-Rosa" class="planta-foto-principal">
+            </div>
+
+            <div class="planta-conteudo">
+                <div class="planta-cabecalho">
+                    <div>
+                        <span class="planta-categoria">ÁRVORE NATIVA</span>
+                        <h1>Ipê-Rosa</h1>
+                        <p class="nome-cientifico-produto">Handroanthus impetiginosus</p>
+                    </div>
+                    <div class="avaliacao">
+                        <span>★★★★★</span>
+                        <small>4.8 (120)</small>
+                    </div>
+                </div>
+
+                <p class="descricao-produto">
+                    O ipê-rosa é uma árvore nativa do Brasil, conhecida por sua floração exuberante e por sua
+                    importância para a biodiversidade. É uma espécie que se adapta bem a diferentes ambientes quando
+                    recebe os cuidados adequados.
+                </p>
+
+                <div class="caracteristicas-planta">
+                    <div class="caracteristica">
+                        <span class="icone-caracteristica">♧</span>
+                        <strong>Água</strong>
+                        <small>A cada 2–3 dias</small>
+                    </div>
+                    <div class="caracteristica">
+                        <span class="icone-caracteristica">☀</span>
+                        <strong>Luz</strong>
+                        <small>Sol direto</small>
+                    </div>
+                    <div class="caracteristica">
+                        <span class="icone-caracteristica">♧</span>
+                        <strong>Umidade</strong>
+                        <small>Moderada</small>
+                    </div>
+                    <div class="caracteristica">
+                        <span class="icone-caracteristica">♧</span>
+                        <strong>Pet Friendly</strong>
+                        <small>Verifique antes</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="informacoes-planta">
+            <div class="informacao-bloco">
+                <h2>Sobre o Ipê-Rosa</h2>
+                <br>
+                <p>O ipê-rosa é uma das árvores nativas mais emblemáticas e visualmente impressionantes da flora da Mata
+                    Atlântica e do Cerrado. Pertencente à família Bignoniaceae, a espécie destaca-se por sua espetacular
+                    floração anual, que transforma paisagens urbanas e naturais em grandes tapetes coloridos.</p>
+                <br>
+                <p>É amplamente utilizada no paisagismo urbano, na recuperação de ecossistemas degradados e é altamente
+                    valorizada na indústria por possuir uma madeira de lei de extrema densidade e durabilidade.</p>
+                <br>
+                <p>Seu nome vem do Tupi-Guarani e significa "árvore de casca grossa". É a árvore nacional do Paraguai e
+                    símbolo informal do Brasil. Segundo a lenda, foi a única árvore corajosa a aceitar o desafio do
+                    Criador para florescer no inverno e colorir os meses frios.</p>
+            </div>
+
+            <div class="glossario-produto">
+                <h2>Glossário</h2>
+                <br>
+                <div class="termos-grid">
+                    <div><strong>Nativa:</strong><span>Espécie originária da região em que ocorre naturalmente.</span>
+                    </div>
+                    <div><strong>Biodiversidade:</strong><span>Variedade de seres vivos existentes em determinado
+                            ambiente.</span></div>
+                    <div><strong>Ornamental:</strong><span>Algo utilizado principalmente por sua beleza e
+                            aparência.</span></div>
+                    <div><strong>Espécie:</strong><span>Grupo de organismos que possuem características
+                            semelhantes.</span></div>
+                    <div><strong>Longevidade:</strong><span>É uma árvore altamente resistente que pode viver por mais de
+                            100 anos.</span></div>
+                    <div><strong>Regas:</strong><span>Exige água 2 a 3 vezes por semana nos primeiros dois anos; depois
+                            de adulta, resiste bem à seca e precisa de pouquíssima água.</span>
+                    </div>
+                </div>
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT ORIGINAL
+    ===================================================== -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

@@ -410,3 +410,127 @@ p {
     }
   }
   
+  /* ==================== ESTILOS DO CHAT / ROBÔ FLUTUANTE ==================== */
+
+  /* BOTÃO FLUTUANTE DO CHAT (Círculo verde idêntico à imagem) */
+  .btn-abrir-chat-principal {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #5cb82a;
+      /* Verde vivo da imagem */
+      border: none;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      /* Círculo perfeito */
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s, background-color 0.2s;
+      padding: 0;
+  }
+
+  .btn-abrir-chat-principal:hover {
+      background-color: #4da31f;
+      transform: scale(1.08);
+      /* Zoom ao passar o mouse */
+  }
+
+  /* Ajuste de tamanho do vetor do robozinho */
+  .btn-abrir-chat-principal svg {
+      width: 58px;
+      height: 58px;
+  }
+
+  /* CONTAINER FLUTUANTE DO IFRAME (JANELA DO CHAT) */
+  .janela-chat-iframe {
+      display: none;
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      z-index: 10000;
+      background: transparent !important;
+  }
+
+  .janela-chat-iframe iframe {
+      width: 400px;
+      height: 500px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      background-color: transparent !important;
+  }
+
+  
+
+  /* Estilos Gerais de Fonte e Reset */
+  /* Topo (Header) */
+  .cabecalho {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 2px solid #b3b3b3;
+      background-color: #f5f5f5;
+      padding: 20px;
+      margin-bottom: 20px;
+  }
+
+  /* O Grid Central (Duas colunas desproporcionais) */
+  .grade-container {
+      display: grid;
+      /* 1fr para a esquerda (menor) e 2.5fr para a direita (maior) */
+      grid-template-columns: 1fr 2.5fr;
+      gap: 20px;
+      margin-bottom: 20px;
+  }
+
+  /* Sidebar Esquerda (Estilo Azul Claro) */
+  .sidebar {
+      background-color: #ebf2fa;
+      border: 2px solid #2a7d2a;;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+  }
+
+  .item-azul {
+      background-color: #cfdcf3;
+      border: 2px solid #2a7d2a;
+      height: 80px;
+      border-radius: 4px;
+  }
+
+  /* Conteúdo Direita (Estilo Roxo Claro) */
+  .conteudo-principal {
+      background-color: #f3ebf7;
+      border: 2px solid #0b500b;;
+      padding: 30px;
+  }
+
+  .conteudo-principal h1 {
+      color: #0b500b;;
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 28px;
+  }
+
+  .conteudo-principal p {
+      text-align: justify;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      font-size: 15px;
+  }
+
+  /* Rodapé (Footer) */
+  .rodape {
+      border: 2px solid #b3b3b3;
+      background-color: #f5f5f5;
+      padding: 20px;
+      font-size: 14px;
+      font-weight: bold;
+  }
